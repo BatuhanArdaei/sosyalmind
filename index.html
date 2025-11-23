@@ -3,538 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lusso Gusto | Premium Menu</title>
+    <title>Ertaş Pide & Kebap Salonu</title>
     
-    <!-- Modern Font: DM Sans -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- İkonlar -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-color: #141414;      /* Çok koyu gri (Tam siyah değil) */
-            --card-bg: #1f1f1f;       /* Kart rengi */
-            --accent: #d4af37;        /* Altın */
+            --bg-color: #141414;
+            --card-bg: #1f1f1f;
+            --accent: #d4af37;
             --text-main: #ffffff;
             --text-sub: #9ca3af;
-            --glass: rgba(31, 31, 31, 0.7); /* Buzlu cam efekti için */
-            --radius: 24px;           /* Yumuşak köşeler */
-            --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            --glass: rgba(20, 20, 20, 0.85);
+            --radius: 24px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'DM Sans', sans-serif;
-            padding-bottom: 80px; /* Alt boşluk */
+            margin: 0; background-color: var(--bg-color); color: var(--text-main); font-family: 'DM Sans', sans-serif; padding-bottom: 80px;
         }
 
-        /* --- STICKY HEADER (Buzlu Cam) --- */
+        /* HEADER */
         .glass-header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
+            position: sticky; top: 0; z-index: 1000; background: var(--glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 15px 20px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .brand-name { font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
+        .brand-name span { color: var(--accent); }
 
-        .brand-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: -0.5px;
-        }
-
-        /* --- AYAR BUTONLARI (TOGGLES) --- */
-        .settings-group {
-            display: flex;
-            gap: 10px;
-        }
-
+        .settings-group { display: flex; gap: 8px; }
         .toggle-btn {
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            font-family: 'DM Sans', sans-serif;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.05);
+            color: #fff; padding: 8px 14px; border-radius: 12px; font-size: 0.8rem;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'DM Sans', sans-serif;
         }
+        .toggle-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
 
-        .toggle-btn.active {
-            background: var(--accent);
-            color: #000;
-            font-weight: 700;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        /* --- ARAMA KUTUSU (Yumuşak) --- */
-        .search-wrapper {
-            position: relative;
-        }
+        /* ARAMA */
+        .search-wrapper { position: relative; }
         .search-input {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 14px 20px 14px 45px;
-            border-radius: 18px;
-            color: white;
-            font-size: 0.95rem;
-            font-family: 'DM Sans', sans-serif;
-            outline: none;
-            transition: 0.3s;
+            width: 100%; background: #252525; border: 1px solid rgba(255,255,255,0.05);
+            padding: 14px 20px 14px 45px; border-radius: 16px; color: white; font-size: 0.95rem; outline: none; transition: 0.3s;
         }
-        .search-input:focus {
-            background: rgba(255,255,255,0.1);
-            border-color: var(--accent);
-        }
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-sub);
-        }
+        .search-input:focus { background: #2a2a2a; border-color: var(--accent); }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
 
-        /* --- ANA İÇERİK --- */
-        .container {
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        /* CONTAINER */
+        .container { padding: 25px 20px; max-width: 800px; margin: 0 auto; }
 
-        /* --- GRID (Kare Görünüm) --- */
-        .grid-view {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
+        /* GRID VIEW */
+        .grid-view { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .cat-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            position: relative;
-            aspect-ratio: 1 / 1.1; /* Kareye yakın dikdörtgen */
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            position: relative; background: var(--card-bg); border-radius: var(--radius);
+            overflow: hidden; aspect-ratio: 1 / 1.15; cursor: pointer; transition: transform 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .cat-card:active { transform: scale(0.97); }
-
-        .cat-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-            transition: 0.5s;
-        }
+        .cat-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transition: 0.5s; }
         .cat-card:hover .cat-img { opacity: 0.6; transform: scale(1.05); }
+        .cat-info {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+        }
+        .cat-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .cat-count { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
 
-        .cat-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            pointer-events: none;
-        }
-        .cat-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 2px;
-        }
-        .cat-count {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* --- LİSTE GÖRÜNÜMÜ (Detay) --- */
-        .list-view {
-            display: none;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .back-btn-wrapper {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            cursor: pointer;
-            color: var(--text-sub);
-            transition: 0.2s;
-        }
-        .back-btn-wrapper:hover { color: var(--accent); }
-        .back-btn-wrapper i { margin-right: 10px; font-size: 1.2rem; }
-        .current-cat-name { font-size: 1.5rem; font-weight: 700; color: white; margin-left: auto; }
+        /* LIST VIEW */
+        .list-view { display: none; animation: slideUp 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+        .nav-back { display: flex; align-items: center; margin-bottom: 25px; cursor: pointer; color: var(--text-sub); }
+        .nav-back i { font-size: 1.2rem; margin-right: 10px; color: var(--accent); }
+        .nav-title { font-size: 1.5rem; font-weight: 700; color: #fff; margin-left: auto; }
 
         .menu-item {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            gap: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: var(--card-bg); border-radius: 20px; padding: 12px;
+            margin-bottom: 12px; display: flex; gap: 15px; border: 1px solid rgba(255,255,255,0.03);
         }
-        
-        .item-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 15px;
-            object-fit: cover;
-        }
-
-        .item-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .item-name { font-size: 1rem; font-weight: 700; color: #fff; }
+        .item-img { width: 95px; height: 95px; border-radius: 16px; object-fit: cover; background: #000; }
+        .item-details { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 4px 0; }
+        .item-name { font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.3; }
         .item-desc { 
-            font-size: 0.8rem; 
-            color: var(--text-sub); 
-            margin-top: 4px; 
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-size: 0.8rem; color: var(--text-sub); margin-top: 5px; line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
-        .item-price {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--accent);
-            align-self: flex-end;
-            margin-top: 5px;
-        }
+        .item-price { font-size: 1.15rem; font-weight: 700; color: var(--accent); align-self: flex-end; }
 
-        /* Animasyonlar */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hidden { display: none !important; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         #loading { text-align: center; margin-top: 50px; color: var(--accent); }
-
     </style>
 </head>
 <body>
 
-    <!-- STICKY HEADER: Her yerde görünür -->
     <div class="glass-header">
         <div class="header-top">
-            <div class="brand-name">Lusso Gusto</div>
-            
+            <div class="brand-name">Ertaş Pide <span>& Kebap Salonu</span></div>
             <div class="settings-group">
-                <!-- Dil Butonu -->
                 <button class="toggle-btn" id="langBtn" onclick="toggleLang()">TR</button>
-                <!-- Para Birimi Butonu -->
                 <button class="toggle-btn" id="currencyBtn" onclick="toggleCurrency()">₺</button>
             </div>
         </div>
-
         <div class="search-wrapper">
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="searchInput" class="search-input" placeholder="Arama yapın...">
         </div>
     </div>
 
-    <!-- İÇERİK -->
     <div class="container">
-        <div id="loading">Menü Yükleniyor...</div>
-
-        <!-- 1. KATEGORİ IZGARASI -->
+        <div id="loading">Menü Hazırlanıyor...</div>
         <div id="gridView" class="grid-view"></div>
-
-        <!-- 2. DETAY LİSTESİ -->
         <div id="listView" class="list-view">
-            <div class="back-btn-wrapper" onclick="goBack()">
+            <div class="nav-back" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i>
                 <span id="backText">Menüye Dön</span>
-                <span class="current-cat-name" id="pageTitle"></span>
+                <span class="nav-title" id="pageTitle"></span>
             </div>
             <div id="productsContainer"></div>
         </div>
     </div>
 
     <script>
-        // --- AYARLAR ---
-        // Kendi Sheet Linkini Buraya Yapıştır:
-        const sheetLink = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6jJDMRSMA7PafphfEiqm4rwbyijvCE5n80MTqLYv9SqSSMpZfidyyIp-jBhWD1_BCN9dDKamwY6d/pub?output=csv";
-        const EURO_RATE = 35; // 1 Euro = 35 TL
-        // ---------------
+        // =============================================================
+        // LİNKLER (İKİ AYRI TABLO)
+        // =============================================================
+        
+        // 1. ANA TABLO (TL, İsimler, Fotolar)
+        const linkTL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTrIczjBfOYYZlHTC17u2iLnfk1aki4U9VG-E66uxiOB0CtCPJYo_hYOdgxKLbvMl8o6cc_7eUuqr8A/pub?output=csv";
+        
+        // 2. EURO TABLOSU (Sadece İsim ve Euro Fiyatı)
+        const linkEUR = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTrIczjBfOYYZlHTC17u2iLnfk1aki4U9VG-E66uxiOB0CtCPJYo_hYOdgxKLbvMl8o6cc_7eUuqr8A/pub?output=csv";
 
-        // Durum Değişkenleri
+        // =============================================================
+
         let state = {
-            lang: 'TR',      // 'TR' veya 'EN'
-            currency: 'TL',  // 'TL' veya 'EUR'
-            data: [],        // Tüm veri
-            grouped: {},     // Kategorize veri
-            view: 'grid',    // 'grid' veya 'list'
-            activeCategory: null
+            lang: 'TR', currency: 'TL',
+            data: [], grouped: {}, activeCat: null, view: 'grid'
         };
 
-        // Arayüz Metinleri (Çeviri)
-        const uiText = {
-            TR: { searchPlaceholder: "Arama yapın...", back: "Menüye Dön", varieties: "Çeşit" },
-            EN: { searchPlaceholder: "Search menu...", back: "Back to Menu", varieties: "Items" }
+        const textRes = {
+            TR: { search: "Arama yapın...", back: "Menüye Dön", unit: "Çeşit" },
+            EN: { search: "Search menu...", back: "Back to Menu", unit: "Items" }
         };
 
-        // Başlangıç
+        // İki tabloyu aynı anda çekip birleştirme
         document.addEventListener('DOMContentLoaded', () => {
-            fetch(sheetLink)
-                .then(res => res.text())
-                .then(csv => {
-                    state.data = csvToObjects(csv);
-                    groupData();
-                    renderCategories();
-                    document.getElementById('loading').style.display = 'none';
-                    updateUIText();
-                });
+            Promise.all([
+                fetch(linkTL).then(r => r.text()),
+                fetch(linkEUR).then(r => r.text())
+            ]).then(([csvTL, csvEUR]) => {
+                
+                const dataTL = csvToObjects(csvTL);
+                const dataEUR = csvToObjects(csvEUR);
+                
+                // VERİLERİ BİRLEŞTİR (MERGE)
+                state.data = mergeData(dataTL, dataEUR);
+                
+                groupData();
+                renderGrid();
+                document.getElementById('loading').style.display = 'none';
+                updateUI();
+
+            }).catch(err => {
+                document.getElementById('loading').innerText = "Hata: Veriler alınamadı. İnternet bağlantınızı kontrol edin.";
+                console.error(err);
+            });
         });
 
-        // Veriyi Grupla
+        // BİRLEŞTİRME FONKSİYONU
+        function mergeData(mainList, euroList) {
+            return mainList.map(item => {
+                // İsimleri eşleştirirken boşlukları temizle ve küçült (Hata payını azaltmak için)
+                const safeName = item.UrunAdi ? item.UrunAdi.trim().toLowerCase() : "";
+                
+                // Euro listesinde bu ürünü bul
+                const euroMatch = euroList.find(e => 
+                    (e.UrunAdi && e.UrunAdi.trim().toLowerCase() === safeName)
+                );
+
+                // Euro fiyatını ekle (Yoksa boş bırak)
+                item.Fiyat_EUR = euroMatch ? euroMatch.Fiyat : "";
+                
+                // Ana fiyatı Fiyat_TL olarak kaydet
+                item.Fiyat_TL = item.Fiyat; 
+
+                return item;
+            });
+        }
+
         function groupData() {
             state.grouped = {};
             state.data.forEach(item => {
-                // Hangi dildeki kategori ismini alacağız?
-                // Sheet'te Kategori ve Kategori_EN sütunları olmalı.
-                // Biz burada anahtarlama için TR olanı baz alacağız, gösterirken çevireceğiz.
-                let catKey = item.Kategori; 
-                if(!catKey) return;
-
-                if(!state.grouped[catKey]) state.grouped[catKey] = [];
-                state.grouped[catKey].push(item);
+                if(!item.Kategori) return;
+                if(!state.grouped[item.Kategori]) state.grouped[item.Kategori] = [];
+                state.grouped[item.Kategori].push(item);
             });
         }
 
-        // --- RENDER (EKRANA BASMA) FONKSİYONLARI ---
-
-        // 1. Kategorileri Bas
-        function renderCategories() {
+        // --- RENDER ---
+        function renderGrid() {
             const grid = document.getElementById('gridView');
             grid.innerHTML = "";
-
+            
             Object.keys(state.grouped).forEach(catKey => {
                 const items = state.grouped[catKey];
-                
-                // Kapak fotosu bul (ilk ürünün fotosu)
                 let cover = "https://placehold.co/400x400/1f1f1f/d4af37?text=" + catKey;
-                const validImgItem = items.find(i => i.ResimLink && i.ResimLink.length > 10);
-                if(validImgItem) cover = validImgItem.ResimLink;
+                const imgItem = items.find(i => i.ResimLink && i.ResimLink.length > 10);
+                if(imgItem) cover = imgItem.ResimLink;
 
-                // Kategori İsmi (Dil Seçimine Göre)
-                // Eğer Kategori_EN hücresi boşsa veya yoksa, normal Kategori'yi kullan.
-                let displayCatName = catKey;
-                if(state.lang === 'EN' && items[0].Kategori_EN) {
-                    displayCatName = items[0].Kategori_EN;
-                }
+                let name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : catKey;
 
-                const card = document.createElement('div');
-                card.className = 'cat-card';
-                card.onclick = () => openCategory(catKey);
-                card.innerHTML = `
+                const div = document.createElement('div');
+                div.className = 'cat-card';
+                div.onclick = () => openCategory(catKey);
+                div.innerHTML = `
                     <img src="${cover}" class="cat-img" loading="lazy">
-                    <div class="cat-overlay">
-                        <div class="cat-title">${displayCatName}</div>
-                        <div class="cat-count">${items.length} ${uiText[state.lang].varieties}</div>
+                    <div class="cat-info">
+                        <div class="cat-title">${name}</div>
+                        <div class="cat-count">${items.length} ${textRes[state.lang].unit}</div>
                     </div>
                 `;
-                grid.appendChild(card);
+                grid.appendChild(div);
             });
         }
 
-        // 2. Ürünleri Bas
-        function renderProducts(items) {
+        function renderList(items) {
             const container = document.getElementById('productsContainer');
             container.innerHTML = "";
 
-            if(items.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:20px; color:#666;">Sonuç bulunamadı.</div>`;
+            if(!items || items.length === 0) {
+                container.innerHTML = `<div style="text-align:center;color:#666;margin-top:20px;">Ürün bulunamadı.</div>`;
                 return;
             }
 
             items.forEach(food => {
-                // Dil Kontrolü
-                let name = food.UrunAdi;
-                let desc = food.Aciklama;
-                
-                if(state.lang === 'EN') {
-                    if(food.UrunAdi_EN) name = food.UrunAdi_EN;
-                    if(food.Aciklama_EN) desc = food.Aciklama_EN;
-                }
-
-                // Resim
-                const img = (food.ResimLink && food.ResimLink.length > 10) ? food.ResimLink : 'https://placehold.co/150x150/1f1f1f/d4af37?text=Lusso';
+                // Dil
+                let name = (state.lang === 'EN' && food.UrunAdi_EN) ? food.UrunAdi_EN : food.UrunAdi;
+                let desc = (state.lang === 'EN' && food.Aciklama_EN) ? food.Aciklama_EN : food.Aciklama;
 
                 // Fiyat
-                let priceRaw = parseFloat(food.Fiyat.replace(/[^0-9,.]/g, '').replace(',', '.'));
-                if(isNaN(priceRaw)) priceRaw = 0;
-
-                let priceStr = "";
+                let priceDisplay = "";
                 if(state.currency === 'TL') {
-                    priceStr = Math.round(priceRaw) + " ₺";
+                    priceDisplay = food.Fiyat_TL ? `${food.Fiyat_TL} ₺` : "-";
                 } else {
-                    priceStr = (priceRaw / EURO_RATE).toFixed(1).replace('.0','') + " €";
+                    priceDisplay = food.Fiyat_EUR ? `${food.Fiyat_EUR} €` : "-";
                 }
+
+                let img = (food.ResimLink && food.ResimLink.length > 10) ? food.ResimLink : "https://placehold.co/150x150/222/d4af37?text=Ertaş";
 
                 const div = document.createElement('div');
                 div.className = 'menu-item';
                 div.innerHTML = `
                     <img src="${img}" class="item-img" loading="lazy">
-                    <div class="item-info">
+                    <div class="item-details">
                         <div>
                             <div class="item-name">${name}</div>
                             <div class="item-desc">${desc}</div>
                         </div>
-                        <div class="item-price">${priceStr}</div>
+                        <div class="item-price">${priceDisplay}</div>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // --- ETKİLEŞİM FONKSİYONLARI ---
-
+        // --- ETKİLEŞİM ---
         function openCategory(catKey) {
+            state.activeCat = catKey;
             state.view = 'list';
-            state.activeCategory = catKey;
-            
-            // Görünüm Değiştir
             document.getElementById('gridView').style.display = 'none';
             document.getElementById('listView').style.display = 'block';
-
-            // Başlığı Ayarla (Dile göre)
-            let displayName = catKey;
-            if(state.lang === 'EN' && state.grouped[catKey][0].Kategori_EN) {
-                displayName = state.grouped[catKey][0].Kategori_EN;
-            }
-            document.getElementById('pageTitle').innerText = displayName;
-
-            // Ürünleri Listele
-            renderProducts(state.grouped[catKey]);
             
-            // Yukarı Kaydır
+            let items = state.grouped[catKey];
+            let name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : catKey;
+            document.getElementById('pageTitle').innerText = name;
+
+            renderList(items);
             window.scrollTo(0,0);
-            
-            // Aramayı Temizle
             document.getElementById('searchInput').value = "";
         }
 
         function goBack() {
+            state.activeCat = null;
             state.view = 'grid';
-            state.activeCategory = null;
             document.getElementById('listView').style.display = 'none';
             document.getElementById('gridView').style.display = 'grid';
             document.getElementById('searchInput').value = "";
-            renderCategories(); // Grid'i güncelle (dil değişmiş olabilir)
+            renderGrid();
         }
-
-        // --- AYAR BUTONLARI ---
 
         function toggleLang() {
             state.lang = (state.lang === 'TR') ? 'EN' : 'TR';
-            
-            // Buton Görünümü
-            const btn = document.getElementById('langBtn');
-            btn.innerText = state.lang;
-            if(state.lang === 'EN') btn.classList.add('active');
-            else btn.classList.remove('active');
-
-            updateUIText();
-            refreshView();
+            updateUI();
+            refreshCurrentView();
         }
 
         function toggleCurrency() {
             state.currency = (state.currency === 'TL') ? 'EUR' : 'TL';
-            
-            // Buton Görünümü
-            const btn = document.getElementById('currencyBtn');
-            btn.innerText = (state.currency === 'TL') ? '₺' : '€';
-            if(state.currency === 'EUR') btn.classList.add('active');
-            else btn.classList.remove('active');
-
-            refreshView();
+            updateUI();
+            refreshCurrentView();
         }
 
-        function refreshView() {
-            // Hangi ekrandaysak orayı yenile
-            if(state.view === 'grid') {
-                renderCategories();
-            } else {
-                // Başlığı da güncelle (dil değişmiş olabilir)
-                let items = state.grouped[state.activeCategory];
-                let displayName = state.activeCategory;
-                if(state.lang === 'EN' && items[0].Kategori_EN) {
-                    displayName = items[0].Kategori_EN;
-                }
-                document.getElementById('pageTitle').innerText = displayName;
-                
-                renderProducts(items);
+        function updateUI() {
+            const lBtn = document.getElementById('langBtn');
+            const cBtn = document.getElementById('currencyBtn');
+            lBtn.innerText = state.lang;
+            cBtn.innerText = (state.currency === 'TL') ? '₺' : '€';
+            lBtn.classList.toggle('active', state.lang === 'EN');
+            cBtn.classList.toggle('active', state.currency === 'EUR');
+            document.getElementById('searchInput').placeholder = textRes[state.lang].search;
+            document.getElementById('backText').innerText = textRes[state.lang].back;
+        }
+
+        function refreshCurrentView() {
+            if(state.view === 'grid') renderGrid();
+            else if(state.view === 'list') {
+                let items = state.grouped[state.activeCat];
+                let name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : state.activeCat;
+                document.getElementById('pageTitle').innerText = name;
+                renderList(items);
+            } else if(state.view === 'search') {
+                document.getElementById('searchInput').dispatchEvent(new Event('keyup'));
             }
         }
 
-        function updateUIText() {
-            const texts = uiText[state.lang];
-            document.getElementById('searchInput').placeholder = texts.searchPlaceholder;
-            document.getElementById('backText').innerText = texts.back;
-        }
-
-        // --- ARAMA MOTORU ---
         document.getElementById('searchInput').addEventListener('keyup', (e) => {
             const term = e.target.value.toLowerCase();
-            const grid = document.getElementById('gridView');
-            const list = document.getElementById('listView');
-            const title = document.getElementById('pageTitle');
-
-            if(term.length > 0) {
-                // Aramada her zaman liste görünümüne geç
-                grid.style.display = 'none';
-                list.style.display = 'block';
-                state.view = 'search'; // Geçici durum
-                title.innerText = (state.lang === 'TR') ? "Arama Sonuçları" : "Search Results";
-                
-                // Tüm ürünlerde ara
-                let results = [];
-                state.data.forEach(item => {
-                    // Hem TR hem EN alanlarda ara
-                    const fullText = `${item.UrunAdi} ${item.Aciklama} ${item.UrunAdi_EN} ${item.Aciklama_EN}`.toLowerCase();
-                    if(fullText.includes(term)) results.push(item);
-                });
-                renderProducts(results);
-            } else {
-                // Arama temizlenirse eski hale dön
-                if(state.activeCategory) {
-                    openCategory(state.activeCategory);
-                } else {
-                    goBack();
-                }
+            if(term.length === 0) {
+                if(state.activeCat) openCategory(state.activeCat);
+                else goBack();
+                return;
             }
+            state.view = 'search';
+            document.getElementById('gridView').style.display = 'none';
+            document.getElementById('listView').style.display = 'block';
+            document.getElementById('pageTitle').innerText = (state.lang === 'TR') ? "Sonuçlar" : "Results";
+            
+            let results = [];
+            state.data.forEach(item => {
+                let fullText = `${item.UrunAdi} ${item.Aciklama} ${item.UrunAdi_EN || ''} ${item.Aciklama_EN || ''}`.toLowerCase();
+                if(fullText.includes(term)) results.push(item);
+            });
+            renderList(results);
         });
 
-        // --- CSV PARSE ---
         function csvToObjects(csv) {
             const lines = csv.split("\n");
             const headers = lines[0].split(",").map(h => h.trim().replace(/[\r"]/g, ""));
