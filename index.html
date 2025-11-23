@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Menü | TL & EURO</title>
+    <title>Lusso Gusto | Görsel Menü</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -13,7 +13,7 @@
             --gold: #d4af37;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
-            --border-radius: 12px;
+            --radius: 16px;
         }
 
         body { 
@@ -21,283 +21,320 @@
             background-color: var(--bg-color); 
             color: var(--text-main); 
             font-family: 'Lato', sans-serif; 
-            -webkit-font-smoothing: antialiased; 
-            padding-bottom: 50px;
+            padding-bottom: 40px;
+            -webkit-tap-highlight-color: transparent;
         }
-        
-        /* Header ve Para Birimi Seçici */
+
+        /* --- HEADER --- */
         header { 
             text-align: center; 
             padding: 30px 20px 20px; 
             background: linear-gradient(to bottom, #000, #121212); 
-            position: relative;
+            position: sticky; top: 0; z-index: 999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
-
-        h1 { font-family: 'Playfair Display', serif; color: var(--gold); margin: 0; font-size: 2.2rem; }
-        p.subtitle { color: var(--text-sub); font-size: 0.8rem; margin-top: 5px; letter-spacing: 1px; text-transform: uppercase; }
-
-        /* Para Birimi Butonları */
-        .currency-switch {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            gap: 10px;
-        }
-
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); margin: 0; font-size: 2rem; }
+        
+        /* Para Birimi */
+        .currency-switch { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
         .currency-btn {
-            background: transparent;
-            border: 1px solid #333;
-            color: var(--text-sub);
-            padding: 8px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.05); border: 1px solid #333; color: #888;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: 0.3s;
         }
+        .currency-btn.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: bold; }
 
-        .currency-btn.active {
-            background-color: var(--gold);
-            color: #000;
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        /* Arama Kutusu */
-        .search-wrapper { 
-            position: sticky; 
-            top: 10px; 
-            z-index: 100; 
-            padding: 0 20px; 
-            margin-top: 10px;
-            margin-bottom: 20px; 
-        }
+        /* Arama */
+        .search-container { padding: 0 20px; margin-top: 15px; }
         .search-box {
-            background: #2a2a2a; 
-            border: 1px solid #333; 
-            border-radius: 50px; 
-            display: flex; 
-            align-items: center; 
-            padding: 12px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
-            backdrop-filter: blur(5px);
+            background: #252525; border-radius: 12px; display: flex; align-items: center; padding: 10px 15px;
+            border: 1px solid #333;
         }
-        .search-box input { 
-            background: transparent; 
-            border: none; 
-            color: white; 
-            width: 100%; 
-            margin-left: 10px; 
-            font-size: 1rem; 
-            outline: none; 
-        }
+        .search-box input { background: transparent; border: none; color: white; width: 100%; margin-left: 10px; font-size: 0.95rem; outline: none; }
         .search-box i { color: var(--gold); }
 
-        /* Menü İçeriği */
-        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
-        
-        .category-title {
-            font-family: 'Playfair Display', serif; 
-            color: var(--gold); 
-            font-size: 1.5rem;
-            margin: 30px 0 15px; 
-            border-bottom: 1px solid #333; 
-            padding-bottom: 5px;
+        /* --- ANA KAPSA YICI --- */
+        .container { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+
+        /* --- 1. GÖRÜNÜM: KATEGORİ IZGARASI (GRID) --- */
+        #categoryGridView {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 Sütun */
+            gap: 15px;
         }
+
+        .cat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            position: relative;
+        }
+        .cat-card:active { transform: scale(0.96); }
+
+        .cat-img-wrapper {
+            width: 100%;
+            height: 140px; /* Fotoğraf yüksekliği */
+            overflow: hidden;
+        }
+        .cat-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .cat-card:hover .cat-img { transform: scale(1.1); }
+
+        .cat-info {
+            padding: 12px;
+            text-align: center;
+            border-top: 2px solid var(--gold); /* İnce altın çizgi */
+        }
+        .cat-name { font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 2px; }
+        .cat-count { font-size: 0.7rem; color: var(--text-sub); }
+
+
+        /* --- 2. GÖRÜNÜM: ÜRÜN LİSTESİ --- */
+        #productListView { display: none; } /* Başlangıçta gizli */
+
+        .back-bar {
+            display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; color: var(--gold);
+        }
+        .back-bar i { margin-right: 8px; font-size: 1.2rem; }
+        .active-cat-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; margin-left: auto; }
 
         .menu-item {
-            display: flex; 
-            background: var(--card-bg); 
-            border-radius: var(--border-radius); 
-            margin-bottom: 15px; 
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
-            transition: transform 0.2s;
+            display: flex; background: var(--card-bg); border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); height: 100px; animation: fadeIn 0.4s ease;
         }
-        
-        .item-img { width: 110px; height: 110px; object-fit: cover; }
-        
-        .item-content { 
-            padding: 12px 15px; 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-        }
-        
-        .item-name { font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; color: #fff; }
-        .item-desc { 
-            font-size: 0.8rem; 
-            color: var(--text-sub); 
-            line-height: 1.3; 
-            display: -webkit-box; 
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical; 
-            overflow: hidden; 
-        }
-        
-        .item-price { 
-            color: var(--gold); 
-            font-weight: 700; 
-            font-size: 1.2rem; 
-            text-align: right; 
-            margin-top: auto; 
-        }
+        .item-img { width: 100px; height: 100%; object-fit: cover; }
+        .item-details { padding: 10px 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .item-name { font-weight: 700; color: #fff; font-size: 1rem; }
+        .item-desc { font-size: 0.75rem; color: #999; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .item-price { color: var(--gold); font-weight: 700; font-size: 1.1rem; text-align: right; }
 
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .hidden { display: none !important; }
-        #loading { text-align: center; color: var(--gold); margin-top: 50px; font-style: italic; }
+        #loading { text-align: center; color: var(--gold); margin-top: 50px; }
+
     </style>
 </head>
 <body>
 
     <header>
         <h1>Lusso Gusto</h1>
-        <p class="subtitle">Premium Restaurant</p>
-        
-        <!-- Para Birimi Seçici -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Ne yemek istersiniz?">
+            </div>
+        </div>
         <div class="currency-switch">
-            <button class="currency-btn active" onclick="setCurrency('TL')">₺ Türk Lirası</button>
-            <button class="currency-btn" onclick="setCurrency('EUR')">€ Euro</button>
+            <button class="currency-btn active" onclick="setCurrency('TL')">₺ TL</button>
+            <button class="currency-btn" onclick="setCurrency('EUR')">€ EURO</button>
         </div>
     </header>
 
-    <div class="search-wrapper">
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Menüde ara...">
+    <div class="container">
+        <div id="loading">Menü Yükleniyor...</div>
+
+        <!-- 1. GÖRÜNÜM: KATEGORİ KARTLARI -->
+        <div id="categoryGridView">
+            <!-- JavaScript burayı dolduracak -->
+        </div>
+
+        <!-- 2. GÖRÜNÜM: ÜRÜN LİSTESİ -->
+        <div id="productListView">
+            <div class="back-bar" onclick="showCategories()">
+                <i class="fas fa-arrow-left"></i> MENÜYE DÖN
+                <span class="active-cat-title" id="pageTitle"></span>
+            </div>
+            <div id="productsContainer">
+                <!-- Ürünler buraya gelecek -->
+            </div>
         </div>
     </div>
 
-    <div class="container">
-        <div id="loading">Menü Yükleniyor...</div>
-        <div id="menuArea"></div>
-    </div>
-
     <script>
-        // ==========================================================
-        // AYARLAR (YÖNETİM KISMI)
-        // ==========================================================
-        
+        // --- AYARLAR ---
         const googleSheetLink = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6jJDMRSMA7PafphfEiqm4rwbyijvCE5n80MTqLYv9SqSSMpZfidyyIp-jBhWD1_BCN9dDKamwY6d/pub?output=csv";
-        
-        // 1 EURO kaç TL? (Burayı değiştirince tüm fiyatlar güncellenir)
         const EURO_KURU = 35; 
+        // ---------------
 
-        // ==========================================================
-
-        let globalMenuData = []; // Verileri hafızada tutmak için
-        let currentCurrency = 'TL'; // Varsayılan para birimi
+        let globalData = [];
+        let groupedData = {};
+        let currentCurrency = 'TL';
 
         document.addEventListener('DOMContentLoaded', () => {
             fetch(googleSheetLink)
                 .then(res => res.text())
                 .then(csvText => {
-                    globalMenuData = csvToObjects(csvText);
-                    renderMenu(globalMenuData); // İlk açılışta TL göster
+                    globalData = csvToObjects(csvText);
+                    groupData(globalData);
+                    renderCategories();
                     document.getElementById('loading').style.display = 'none';
-                })
-                .catch(err => {
-                    document.getElementById('loading').innerText = "Bağlantı Hatası: Lütfen internetinizi kontrol edin.";
                 });
         });
 
-        // Para Birimi Değiştirme Fonksiyonu
-        function setCurrency(currency) {
-            currentCurrency = currency;
-            
-            // Butonların renklerini güncelle
-            const btns = document.querySelectorAll('.currency-btn');
-            btns.forEach(btn => btn.classList.remove('active'));
-            
-            if(currency === 'TL') btns[0].classList.add('active');
-            else btns[1].classList.add('active');
+        // Verileri Kategorilere Göre Grupla
+        function groupData(items) {
+            groupedData = {};
+            items.forEach(item => {
+                if(!item.Kategori || item.Kategori.length < 2) return;
+                if(!groupedData[item.Kategori]) groupedData[item.Kategori] = [];
+                groupedData[item.Kategori].push(item);
+            });
+        }
 
-            // Menüyü yeniden çiz (Yeni fiyatlarla)
-            renderMenu(globalMenuData);
+        // 1. ADIM: Kategori Kartlarını Oluştur
+        function renderCategories() {
+            const grid = document.getElementById('categoryGridView');
+            grid.innerHTML = "";
             
-            // Eğer arama yapılmışsa filtreyi tekrar uygula
-            const searchTerm = document.getElementById('searchInput').value;
-            if(searchTerm.length > 0) {
-                document.getElementById('searchInput').dispatchEvent(new Event('keyup'));
+            Object.keys(groupedData).forEach(catName => {
+                const items = groupedData[catName];
+                // Kategorinin kapak fotoğrafı = O kategorideki ilk ürünün fotoğrafı
+                // Eğer ilk ürünün fotoğrafı yoksa varsayılan resim kullan
+                let coverImg = "https://placehold.co/400x300/222/d4af37?text=" + catName;
+                
+                // Geçerli bir resim linki bulmaya çalış (ilk ürün, yoksa ikinci...)
+                for (let food of items) {
+                    if (food.ResimLink && food.ResimLink.length > 10) {
+                        coverImg = food.ResimLink;
+                        break;
+                    }
+                }
+
+                const card = document.createElement('div');
+                card.className = 'cat-card';
+                card.onclick = () => openCategory(catName);
+                card.innerHTML = `
+                    <div class="cat-img-wrapper">
+                        <img src="${coverImg}" class="cat-img" loading="lazy">
+                    </div>
+                    <div class="cat-info">
+                        <div class="cat-name">${catName}</div>
+                        <div class="cat-count">${items.length} Çeşit</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 2. ADIM: Kategoriye Tıklanınca Ürünleri Göster
+        function openCategory(catName) {
+            // Görünüm Değiştir
+            document.getElementById('categoryGridView').style.display = 'none';
+            document.getElementById('productListView').style.display = 'block';
+            
+            // Başlığı Ayarla
+            document.getElementById('pageTitle').innerText = catName;
+
+            // Ürünleri Listele
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = "";
+
+            groupedData[catName].forEach(food => {
+                container.innerHTML += createProductCard(food);
+            });
+
+            // Sayfayı yukarı kaydır
+            window.scrollTo(0,0);
+        }
+
+        // Geri Dön Butonu
+        function showCategories() {
+            document.getElementById('productListView').style.display = 'none';
+            document.getElementById('categoryGridView').style.display = 'grid'; // Grid yapısına geri dön
+            document.getElementById('searchInput').value = ""; // Aramayı temizle
+            renderCategories(); // Grid'i tazele (arama yapıldıysa düzelsin diye)
+        }
+
+        // Tekil Ürün Kartı HTML'i (Helper Function)
+        function createProductCard(food) {
+            const img = (food.ResimLink && food.ResimLink.includes('http')) ? food.ResimLink : 'https://placehold.co/150x150/222/d4af37?text=Gusto';
+            
+            let rawPrice = parseFloat(food.Fiyat.replace(/[^0-9,.]/g, '').replace(',', '.'));
+            if(isNaN(rawPrice)) rawPrice = 0;
+            
+            let displayPrice = "";
+            if(currentCurrency === 'TL') {
+                displayPrice = Math.round(rawPrice) + " ₺";
+            } else {
+                displayPrice = (rawPrice / EURO_KURU).toFixed(1).replace('.0','') + " €";
+            }
+
+            return `
+            <div class="menu-item" data-search="${food.UrunAdi} ${food.Aciklama} ${food.Kategori}">
+                <img src="${img}" class="item-img" loading="lazy">
+                <div class="item-details">
+                    <div>
+                        <div class="item-name">${food.UrunAdi}</div>
+                        <div class="item-desc">${food.Aciklama}</div>
+                    </div>
+                    <div class="item-price">${displayPrice}</div>
+                </div>
+            </div>`;
+        }
+
+        // Para Birimi Değiştirme
+        function setCurrency(curr) {
+            currentCurrency = curr;
+            document.querySelectorAll('.currency-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Eğer şu an bir kategori içindeysek, oradaki fiyatları güncelle
+            const productViewStyle = window.getComputedStyle(document.getElementById('productListView')).display;
+            if(productViewStyle !== 'none') {
+                // Şu an hangi kategorideyiz? Başlıktan alalım
+                const currentCat = document.getElementById('pageTitle').innerText;
+                openCategory(currentCat);
             }
         }
 
-        // Menüyü Ekrana Basma
-        function renderMenu(items) {
-            const menuArea = document.getElementById('menuArea');
-            menuArea.innerHTML = ""; // Önceki içeriği temizle
-
-            const grouped = {};
-            
-            // Kategorilere ayır
-            items.forEach(item => {
-                if(!item.Kategori || item.Kategori.length < 2) return;
-                if(!grouped[item.Kategori]) grouped[item.Kategori] = [];
-                grouped[item.Kategori].push(item);
-            });
-
-            Object.keys(grouped).forEach(catName => {
-                const section = document.createElement('div');
-                section.className = 'category-section';
-                
-                let html = `<h2 class="category-title">${catName}</h2>`;
-                
-                grouped[catName].forEach(food => {
-                    const img = (food.ResimLink && food.ResimLink.includes('http')) ? food.ResimLink : 'https://placehold.co/150x150/1e1e1e/d4af37?text=Lusso';
-                    
-                    // Fiyat Hesaplama
-                    let displayPrice = "";
-                    // Excel'den gelen "280 ₺" gibi yazıları temizleyip sayıya çeviriyoruz
-                    let rawPrice = parseFloat(food.Fiyat.replace(/[^0-9,.]/g, '').replace(',', '.'));
-
-                    if (isNaN(rawPrice)) rawPrice = 0;
-
-                    if (currentCurrency === 'TL') {
-                        displayPrice = rawPrice + " ₺";
-                    } else {
-                        // Euro hesaplama: Fiyat / Kur
-                        let euroPrice = (rawPrice / EURO_KURU).toFixed(1); // Virgülden sonra 1 hane (Ör: 12.5)
-                        // Sonu .0 ise sil (Ör: 12.0 -> 12)
-                        displayPrice = euroPrice.replace('.0', '') + " €"; 
-                    }
-
-                    html += `
-                    <div class="menu-item" data-search="${food.UrunAdi} ${food.Aciklama}">
-                        <img src="${img}" class="item-img" loading="lazy">
-                        <div class="item-content">
-                            <div>
-                                <div class="item-name">${food.UrunAdi}</div>
-                                <div class="item-desc">${food.Aciklama}</div>
-                            </div>
-                            <div class="item-price">${displayPrice}</div>
-                        </div>
-                    </div>`;
-                });
-                section.innerHTML = html;
-                menuArea.appendChild(section);
-            });
-        }
-
-        // Arama Motoru
+        // Arama Motoru (Gelişmiş)
         document.getElementById('searchInput').addEventListener('keyup', function(e) {
             const term = e.target.value.toLowerCase();
-            const items = document.querySelectorAll('.menu-item');
-            const categories = document.querySelectorAll('.category-section');
+            
+            const gridView = document.getElementById('categoryGridView');
+            const listView = document.getElementById('productListView');
+            const listContainer = document.getElementById('productsContainer');
 
-            items.forEach(item => {
-                const text = item.getAttribute('data-search').toLowerCase();
-                if(text.includes(term)) item.classList.remove('hidden');
-                else item.classList.add('hidden');
-            });
+            if(term.length > 0) {
+                // Arama yapılıyorsa Grid'i gizle, Listeyi aç
+                gridView.style.display = 'none';
+                listView.style.display = 'block';
+                document.getElementById('pageTitle').innerText = "Arama Sonuçları";
+                document.querySelector('.back-bar i').style.display = 'inline-block'; // Geri tuşu aktif
 
-            categories.forEach(cat => {
-                const visibleItems = cat.querySelectorAll('.menu-item:not(.hidden)');
-                if(visibleItems.length === 0) cat.classList.add('hidden');
-                else cat.classList.remove('hidden');
-            });
+                // Tüm ürünleri filtrele ve göster
+                let resultsHtml = "";
+                let count = 0;
+                
+                Object.keys(groupedData).forEach(cat => {
+                    groupedData[cat].forEach(food => {
+                        const searchContent = (food.UrunAdi + " " + food.Aciklama + " " + food.Kategori).toLowerCase();
+                        if(searchContent.includes(term)) {
+                            resultsHtml += createProductCard(food);
+                            count++;
+                        }
+                    });
+                });
+
+                if(count === 0) {
+                    listContainer.innerHTML = `<div style="text-align:center; padding:20px; color:#888;">Ürün bulunamadı.</div>`;
+                } else {
+                    listContainer.innerHTML = resultsHtml;
+                }
+
+            } else {
+                // Arama temizlendiyse Ana Ekrana dön
+                showCategories();
+            }
         });
 
-        // CSV İşleyici
+        // CSV Parslama
         function csvToObjects(csv) {
             const lines = csv.split("\n");
             const headers = lines[0].split(",").map(h => h.trim().replace(/[\r"]/g, ""));
