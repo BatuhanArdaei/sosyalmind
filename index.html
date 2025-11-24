@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ertaş Pide & Kebap | Deluxe</title>
     
-    <!-- FONTLAR: Outfit (Başlık) & Inter (Metin) -->
+    <!-- FONTLAR -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -23,45 +23,44 @@
             --radius: 20px;
         }
 
-        /* --- TEMEL AYARLAR & SAĞ TIK ENGELİ --- */
+        /* TEMEL AYARLAR */
         body {
             margin: 0; background-color: var(--bg-deep); color: var(--text-white);
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; padding-bottom: 140px;
-            -webkit-user-select: none; user-select: none; /* Metin seçimi yasak */
+            -webkit-user-select: none; user-select: none;
         }
 
-        /* ARKA PLAN (Temsili Resim) */
+        /* ARKA PLAN */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop'); 
             background-size: cover; background-position: center; opacity: 0.15; filter: blur(8px); z-index: -10;
         }
 
-        /* --- YENİ YÜKLEME EKRANI (GIF) --- */
+        /* --- YENİ YÜKLEME EKRANI (VIDEO) --- */
         .global-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #050505; z-index: 99999;
+            background: #000000; z-index: 99999; /* Tam siyah arka plan */
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.4s ease, visibility 0.4s;
+            transition: opacity 0.5s ease, visibility 0.5s;
         }
         .global-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         
-        /* GIF STİLİ */
-        .loader-gif {
-            width: 120px; /* GIF Boyutu */
+        /* VIDEO STİLİ */
+        .loader-video {
+            width: 180px; /* Videonun ekrandaki boyutu */
             height: auto;
-            object-fit: contain;
-            margin-bottom: 20px;
-            /* Eğer GIF'in etrafında beyazlık varsa bunu açabilirsin: mix-blend-mode: multiply; */
+            mix-blend-mode: screen; /* Siyah arkaplanı silip sadece logoyu gösterir */
+            margin-bottom: 10px;
         }
         
         .loading-text {
             font-family: 'Outfit', sans-serif; font-weight: 800; 
             letter-spacing: 4px; color: #fff; font-size: 1rem;
-            animation: pulse 1.5s infinite; text-transform: uppercase;
+            animation: pulse 2s infinite; text-transform: uppercase; opacity: 0.8;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
 
         /* --- HEADER --- */
@@ -117,7 +116,7 @@
         
         .search-results-area { flex: 1; overflow-y: auto; }
 
-        /* --- KART YAPISI (4:5 Instagram Boyutu) --- */
+        /* --- KART YAPISI --- */
         .content-area { max-width: 1000px; margin: 0 auto; padding: 20px; }
         
         .grid-layout { 
@@ -174,7 +173,7 @@
             padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; cursor: pointer;
         }
 
-        /* SOSYALMIND İMZA */
+        /* FOOTER */
         .footer-branding {
             text-align: center; padding: 20px 10px 40px 10px; font-family: 'Outfit', sans-serif;
             font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.5px;
@@ -203,9 +202,9 @@
         
         .dock-item:hover, .dock-item:active { color: #fff; }
         .dock-item:hover i { color: var(--primary); transform: translateY(-3px); }
-        .dock-item.taxi i { color: #FFD700; } /* Taksi Sarısı */
+        .dock-item.taxi i { color: #FFD700; }
 
-        /* WIFI MODAL */
+        /* MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 10000;
@@ -227,10 +226,12 @@
 </head>
 <body>
 
-    <!-- YÜKLEME EKRANI (GIF) -->
+    <!-- YÜKLEME EKRANI (VIDEO) -->
     <div id="globalLoader" class="global-loader">
-        <!-- SENİN GIF'İN -->
-        <img src="https://res.cloudinary.com/douh5tbmk/image/upload/v1763961371/SM_LOGO_1_qsq8qz.gif" class="loader-gif" alt="Yükleniyor">
+        <!-- SENİN VİDEO LİNKİN -->
+        <video autoplay loop muted playsinline class="loader-video">
+            <source src="https://res.cloudinary.com/douh5tbmk/video/upload/v1763962046/sm_logo_animasyon_hoec4y.mp4" type="video/mp4">
+        </video>
         <div class="loading-text">ERTAŞ PİDE</div>
     </div>
 
@@ -278,7 +279,7 @@
             <div id="productsContainer" class="grid-layout"></div>
         </div>
 
-        <!-- SOSYALMIND -->
+        <!-- SOSYALMIND İMZASI -->
         <div class="footer-branding">
             Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır.
         </div>
@@ -324,9 +325,12 @@
             EN: { searchPh: "Search...", back: "GO BACK", unit: "ITEMS", langLabel: "🇹🇷 TR", sort: ["Sort", "Lowest", "Highest"] } 
         };
 
-        // --- LOADER ---
+        // --- LOADER (Video'yu yönetir) ---
         function showLoading() { document.getElementById('globalLoader').classList.remove('hidden'); }
-        function hideLoading() { const l=document.getElementById('globalLoader'); setTimeout(()=>{l.classList.add('hidden')},600); }
+        function hideLoading() { 
+            const l=document.getElementById('globalLoader'); 
+            setTimeout(()=>{l.classList.add('hidden')},600); // 600ms sonra gizle
+        }
 
         // --- INIT ---
         document.getElementById('wifiPassText').innerText = WIFI_SIFRE;
@@ -337,7 +341,7 @@
                 state.data = mergeData(csvToObjects(csvTL), csvToObjects(csvEUR));
                 groupData();
                 renderGrid();
-                hideLoading();
+                hideLoading(); // Veri yüklenince loading ekranını kaldır
                 updateUI();
             });
         });
