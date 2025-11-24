@@ -23,7 +23,6 @@
             --radius: 20px;
         }
 
-        /* Kutu Modeli */
         *, *::before, *::after { box-sizing: border-box; }
 
         body {
@@ -40,44 +39,22 @@
             background-size: cover; background-position: center; opacity: 0.15; filter: blur(8px); z-index: -10;
         }
 
-        /* --- YENİ SİSLİ LOADER --- */
+        /* --- LOADER --- */
         #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000000;
-            z-index: 99999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000000; z-index: 99999;
             display: flex; justify-content: center; align-items: center;
             transition: opacity 0.6s ease, visibility 0.6s;
         }
-
-        /* SİS EFEKTİ (Vignette) */
         #preloader::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, 
-                rgba(0,0,0,0) 0%, 
-                rgba(0,0,0,0.4) 20%, 
-                rgba(0,0,0,0.9) 50%, 
-                #000000 100%
-            );
-            pointer-events: none;
-            z-index: 2;
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 20%, rgba(0,0,0,0.9) 50%, #000000 100%);
+            pointer-events: none; z-index: 2;
         }
-
-        #preloader.loader-hidden {
-            opacity: 0; visibility: hidden; pointer-events: none;
-        }
-
-        /* Video Ayarları */
+        #preloader.loader-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         #preloader video {
-            width: 180px;
-            height: 180px;
-            object-fit: contain;
-            border-radius: 50%;
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15);
-            position: relative;
-            z-index: 1;
+            width: 180px; height: 180px; object-fit: contain; border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15); position: relative; z-index: 1;
         }
         #preloader video::-webkit-media-controls { display: none !important; }
 
@@ -89,13 +66,11 @@
             padding: 15px 20px; border-bottom: 1px solid var(--border-glass);
             display: flex; justify-content: space-between; align-items: center;
         }
-        
         .brand-logo { 
             font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; 
             color: #fff; text-transform: uppercase; letter-spacing: -0.5px; flex: 1;
         }
         .brand-logo span { color: var(--primary); }
-
         .header-actions { display: flex; align-items: center; gap: 10px; }
 
         .ctrl-btn {
@@ -105,26 +80,18 @@
             min-width: 40px; display: flex; align-items: center; justify-content: center;
         }
         .ctrl-btn.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 59, 59, 0.4); }
+        .search-trigger { background: transparent; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 8px; transition: 0.3s; }
 
-        .search-trigger {
-            background: transparent; border: none; color: #fff; font-size: 1.2rem;
-            cursor: pointer; padding: 8px; transition: 0.3s;
-        }
-
-        /* --- ARAMA POPUP --- */
+        /* --- SEARCH OVERLAY --- */
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.98); z-index: 2000;
             display: flex; flex-direction: column; padding: 20px;
-            opacity: 0; visibility: hidden; transition: 0.3s;
-            transform: translateY(-20px);
-            box-sizing: border-box;
+            opacity: 0; visibility: hidden; transition: 0.3s; transform: translateY(-20px); box-sizing: border-box;
         }
         .search-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
-        
         .search-header { display: flex; justify-content: flex-end; margin-bottom: 20px; width: 100%; }
         .close-search { color: #fff; font-size: 1.8rem; background: none; border: none; cursor: pointer; padding: 10px; }
-        
         .search-input {
             width: 100%; background: #1a1a1a; border: 1px solid #333;
             padding: 18px 20px; border-radius: 16px; color: #fff; font-size: 1.1rem; 
@@ -132,18 +99,12 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         .search-input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 59, 59, 0.2); }
-        
         .search-results-area { flex: 1; overflow-y: auto; width: 100%; }
 
         /* --- CONTENT --- */
         .content-area { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        
-        .grid-layout { 
-            display: grid; gap: 15px;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
-        }
+        .grid-layout { display: grid; gap: 15px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 
-        /* --- KART YAPISI --- */
         .card-base {
             position: relative; border-radius: var(--radius); overflow: hidden;
             cursor: pointer; border: 1px solid var(--border-glass);
@@ -152,33 +113,26 @@
             transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .card-base:active { transform: scale(0.96); }
-
         .card-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; transition: transform 0.6s ease; filter: brightness(0.8); z-index: 0;
-            pointer-events: none;
+            object-fit: cover; transition: transform 0.6s ease; filter: brightness(0.8); z-index: 0; pointer-events: none;
         }
         .card-base:hover .card-img { transform: scale(1.05); filter: brightness(1); }
-
         .card-overlay {
             position: relative; z-index: 1;
             background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%);
             padding: 20px 15px 15px 15px; width: 100%;
         }
-
         .card-title {
             font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: #fff;
-            margin-bottom: 4px; line-height: 1.2; letter-spacing: -0.5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+            margin-bottom: 4px; line-height: 1.2; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.9);
         }
         .card-subtitle {
             font-size: 0.75rem; color: #ccc; font-weight: 400;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-            margin-bottom: 8px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px;
         }
         .card-price {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.3rem; font-weight: 800; color: var(--primary);
+            font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--primary);
             text-align: right; text-shadow: 0 0 15px rgba(0,0,0,1);
             padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.1);
         }
@@ -186,7 +140,6 @@
         /* NAV & SORT */
         .list-view { display: none; }
         .list-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        
         .nav-back-btn { display: flex; align-items: center; color: #fff; cursor: pointer; gap: 10px; }
         .nav-back-icon {
             width: 35px; height: 35px; background: rgba(255,255,255,0.1); border-radius: 50%;
@@ -197,7 +150,7 @@
             padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; cursor: pointer;
         }
 
-        /* FOOTER BRANDING */
+        /* FOOTER */
         .footer-branding {
             text-align: center; padding: 20px 10px 40px 10px; font-family: 'Outfit', sans-serif;
             font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.5px;
@@ -211,8 +164,7 @@
             width: 94%; max-width: 420px;
             background: rgba(18, 18, 18, 0.95);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 30px;
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 15px; z-index: 999;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
@@ -223,12 +175,11 @@
         }
         .dock-item i { font-size: 1.3rem; margin-bottom: 4px; transition: 0.3s; }
         .dock-item span { font-size: 0.65rem; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; }
-        
         .dock-item:hover, .dock-item:active { color: #fff; }
         .dock-item:hover i { color: var(--primary); transform: translateY(-3px); }
         .dock-item.taxi i { color: #FFD700; }
 
-        /* WIFI MODAL */
+        /* MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 10000;
@@ -250,14 +201,14 @@
 </head>
 <body>
 
-    <!-- YÜKLEME EKRANI (SİSLİ & ORTALI) -->
+    <!-- YÜKLEME EKRANI -->
     <div id="preloader">
         <video autoplay muted loop playsinline>
             <source src="https://res.cloudinary.com/douh5tbmk/video/upload/v1763962054/sm_logo_animasyon_bdso9x.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header class="cinematic-header">
         <div class="brand-logo">Ertaş <span>Pide</span></div>
         <div class="header-actions">
@@ -269,7 +220,7 @@
         </div>
     </header>
 
-    <!-- Fullscreen Search Overlay -->
+    <!-- SEARCH OVERLAY -->
     <div id="searchOverlay" class="search-overlay">
         <div class="search-header">
             <button class="close-search" onclick="closeSearch()"><i class="fas fa-times"></i></button>
@@ -278,42 +229,51 @@
         <div id="searchResults" class="search-results-area grid-layout"></div>
     </div>
 
-    <!-- Content -->
+    <!-- CONTENT -->
     <div class="content-area">
-        
-        <!-- Kategori Izgarası -->
+        <!-- Kategoriler -->
         <div id="gridView" class="grid-layout"></div>
 
-        <!-- Ürün Listesi -->
+        <!-- Ürünler -->
         <div id="listView" class="list-view">
             <div class="list-header-row">
                 <div class="nav-back-btn" onclick="goBack()">
                     <div class="nav-back-icon"><i class="fas fa-arrow-left"></i></div>
                     <div>
-                        <div style="font-size: 0.7rem; color: #888;">GERİ DÖN</div>
-                        <div style="font-weight: 700;" id="pageTitle">KATEGORİ</div>
+                        <div style="font-size: 0.7rem; color: #888;" data-i18n="back">GERİ DÖN</div>
+                        <div style="font-weight: 700;" id="pageTitle" data-i18n="categoryTitle">KATEGORİ</div>
                     </div>
                 </div>
                 <button class="sort-btn" id="sortBtn" onclick="toggleSort()">
-                    <i class="fas fa-sort"></i> <span id="sortText">Sırala</span>
+                    <i class="fas fa-sort"></i> <span id="sortText" data-i18n="sort0">Sırala</span>
                 </button>
             </div>
             <div id="productsContainer" class="grid-layout"></div>
         </div>
 
-        <!-- SOSYALMIND İMZASI (Dinamik Dilli) -->
-        <div class="footer-branding">
+        <!-- FOOTER (Otomatik Çevirili) -->
+        <div class="footer-branding" data-i18n="footer">
             Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır.
         </div>
     </div>
 
-    <!-- BOTTOM DOCK -->
+    <!-- BOTTOM DOCK (Dil Entegreli) -->
     <div class="bottom-dock">
-        <button class="dock-item" onclick="openModal('wifiModal')"><i class="fas fa-wifi"></i> <span>Wi-Fi</span></button>
-        <button class="dock-item" onclick="openMap()"><i class="fas fa-location-dot"></i> <span>Konum</span></button>
-        <button class="dock-item taxi" onclick="callTaxi()"><i class="fas fa-taxi"></i> <span>Taksi</span></button>
-        <button class="dock-item" onclick="shareMenu()"><i class="fas fa-share-nodes"></i> <span>Paylaş</span></button>
-        <button class="dock-item" onclick="openInsta()"><i class="fab fa-instagram"></i> <span>Insta</span></button>
+        <button class="dock-item" onclick="openModal('wifiModal')">
+            <i class="fas fa-wifi"></i> <span data-i18n="wifi">Wi-Fi</span>
+        </button>
+        <button class="dock-item" onclick="openMap()">
+            <i class="fas fa-location-dot"></i> <span data-i18n="location">Konum</span>
+        </button>
+        <button class="dock-item taxi" onclick="callTaxi()">
+            <i class="fas fa-taxi"></i> <span data-i18n="taxi">Taksi</span>
+        </button>
+        <button class="dock-item" onclick="shareMenu()">
+            <i class="fas fa-share-nodes"></i> <span data-i18n="share">Paylaş</span>
+        </button>
+        <button class="dock-item" onclick="openInsta()">
+            <i class="fab fa-instagram"></i> <span data-i18n="insta">Insta</span>
+        </button>
     </div>
 
     <!-- WIFI MODAL -->
@@ -321,21 +281,19 @@
         <div class="modal-card">
             <div class="close-modal" onclick="closeModal('wifiModal')"><i class="fas fa-times"></i></div>
             <div class="modal-icon"><i class="fas fa-wifi"></i></div>
-            <div class="modal-title">Wi-Fi Şifresi</div>
+            <div class="modal-title" data-i18n="wifiTitle">Wi-Fi Şifresi</div>
             <div class="modal-text" id="wifiPassText">...</div>
-            <button class="copy-btn" onclick="copyWifi()">Kopyala</button>
+            <button class="copy-btn" onclick="copyWifi()" data-i18n="copy">Kopyala</button>
         </div>
     </div>
 
     <script>
-        // --- SAĞ TIK ENGELLEME ---
         document.addEventListener('contextmenu', event => event.preventDefault());
 
         // --- AYARLAR ---
         const linkTL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTrIczjBfOYYZlHTC17u2iLnfk1aki4U9VG-E66uxiOB0CtCPJYo_hYOdgxKLbvMl8o6cc_7eUuqr8A/pub?output=csv";
         const linkEUR = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRB3BKM6zo6iiU0Z9IwUYlPYNyT5R8oHC8tYT_LTGS2eOxkxebowYQoSWtBPMp8Q1HDZmcJPlvxWA4F/pub?output=csv";
         
-        // !!! GÜNCELLE !!!
         const TAXI_NUMARASI = "+905320000000"; 
         const WIFI_SIFRE = "Ertas2024"; 
         const INSTAGRAM_LINK = "https://instagram.com/ertaspidekebap";
@@ -343,29 +301,50 @@
 
         let state = { lang: 'TR', currency: 'TL', data: [], grouped: {}, activeCat: null, view: 'grid', sortMode: 0 };
         
-        // DİL AYARLARI (Footer eklendi)
+        // --- MERKEZİ DİL SÖZLÜĞÜ ---
         const ui = { 
             TR: { 
-                searchPh: "Arama yapın...", back: "GERİ DÖN", unit: "ÇEŞİT", 
+                searchPh: "Menüde arama yapın...", 
+                back: "GERİ DÖN", 
+                categoryTitle: "KATEGORİ",
+                unit: "ÇEŞİT", 
                 langLabel: "🇬🇧 EN", 
-                sort: ["Sırala", "En Düşük", "En Yüksek"],
-                footer: "Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır."
+                sort: ["Sıralama: Varsayılan", "Sıralama: En Düşük", "Sıralama: En Yüksek"],
+                footer: "Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır.",
+                wifi: "Wi-Fi",
+                location: "Konum",
+                taxi: "Taksi",
+                share: "Paylaş",
+                insta: "Insta",
+                wifiTitle: "Wi-Fi Şifresi",
+                copy: "Kopyala",
+                copied: "Kopyalandı!"
             }, 
             EN: { 
-                searchPh: "Search...", back: "GO BACK", unit: "ITEMS", 
+                searchPh: "Search the menu...", 
+                back: "GO BACK", 
+                categoryTitle: "CATEGORY",
+                unit: "ITEMS", 
                 langLabel: "🇹🇷 TR", 
-                sort: ["Sort", "Lowest", "Highest"],
-                footer: "This Business is prepared by <span>SosyalMind</span>."
+                sort: ["Sort: Default", "Sort: Lowest Price", "Sort: Highest Price"],
+                footer: "This Business is prepared by <span>SosyalMind</span>.",
+                wifi: "Wi-Fi",
+                location: "Location",
+                taxi: "Taxi",
+                share: "Share",
+                insta: "Insta",
+                wifiTitle: "Wi-Fi Password",
+                copy: "Copy",
+                copied: "Copied!"
             } 
         };
 
-        // --- LOADER YÖNETİMİ ---
+        // --- LOADER ---
         function showLoading() { 
             const loader = document.getElementById('preloader');
             loader.classList.remove('loader-hidden');
             document.body.style.overflow = 'hidden'; 
         }
-        
         function hideLoading() { 
             const loader = document.getElementById('preloader');
             setTimeout(() => { 
@@ -485,9 +464,12 @@
                 state.activeCat = key; state.view = 'list';
                 document.getElementById('gridView').style.display = 'none';
                 document.getElementById('listView').style.display = 'block';
+                
+                // Kategori Başlığını Güncelle
                 const items = state.grouped[key];
                 const name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : key;
                 document.getElementById('pageTitle').innerText = name;
+                
                 renderList(items);
                 window.scrollTo(0,0);
                 hideLoading();
@@ -513,24 +495,49 @@
         function shareMenu() { if (navigator.share) { navigator.share({ title: 'Ertaş Pide & Kebap', url: window.location.href }); } else { alert("Link: " + window.location.href); } }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function copyWifi() { navigator.clipboard.writeText(WIFI_SIFRE).then(() => { const btn = document.querySelector('.copy-btn'); btn.innerText = "Kopyalandı!"; btn.style.background = "#4CAF50"; setTimeout(() => { btn.innerText = "Kopyala"; btn.style.background = "var(--primary)"; }, 2000); }); }
+        
+        function copyWifi() {
+            navigator.clipboard.writeText(WIFI_SIFRE).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = ui[state.lang].copied; // DİNAMİK DİL
+                btn.style.background = "#4CAF50";
+                setTimeout(() => {
+                    btn.innerText = ui[state.lang].copy; // DİNAMİK DİL GERİ DÖNÜŞ
+                    btn.style.background = "var(--primary)";
+                }, 2000);
+            });
+        }
 
-        // --- UI ---
+        // --- UI UPDATES ---
         function toggleSort() { state.sortMode = (state.sortMode + 1) % 3; updateSortButton(); if(state.view === 'list') renderList(state.grouped[state.activeCat]); }
         function updateSortButton() { document.getElementById('sortText').innerText = ui[state.lang].sort[state.sortMode]; }
 
         function toggleLang() { state.lang = state.lang === 'TR' ? 'EN' : 'TR'; showLoading(); setTimeout(() => { updateUI(); if(state.view==='list') openCat(state.activeCat); else renderGrid(); hideLoading(); }, 600); }
         function toggleCurrency() { state.currency = state.currency === 'TL' ? 'EUR' : 'TL'; showLoading(); setTimeout(() => { updateUI(); if(state.view==='list') openCat(state.activeCat); else renderGrid(); hideLoading(); }, 600); }
 
+        // --- MERKEZİ DİL GÜNCELLEME FONKSİYONU ---
         function updateUI() {
-            document.getElementById('langBtn').innerText = ui[state.lang].langLabel;
+            const texts = ui[state.lang];
+
+            // 1. data-i18n etiketli tüm elementleri bul ve çevir
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(texts[key]) {
+                    // Eğer footer gibi HTML içeriyorsa innerHTML, yoksa innerText
+                    if(key === 'footer') el.innerHTML = texts[key];
+                    else el.innerText = texts[key];
+                }
+            });
+
+            // 2. Butonlar ve Placeholderlar
+            document.getElementById('langBtn').innerText = texts.langLabel;
             document.getElementById('currencyBtn').innerText = state.currency === 'TL' ? '₺' : '€';
             document.getElementById('langBtn').classList.toggle('active', state.lang === 'EN');
             document.getElementById('currencyBtn').classList.toggle('active', state.currency === 'EUR');
-            document.getElementById('searchInput').placeholder = ui[state.lang].searchPh;
+            document.getElementById('searchInput').placeholder = texts.searchPh;
             
-            // FOOTER METNİNİ GÜNCELLE
-            document.querySelector('.footer-branding').innerHTML = ui[state.lang].footer;
+            // 3. Kopya butonu reset (Eğer kopyalandı yazısında kaldıysa düzelt)
+            document.querySelector('.copy-btn').innerText = texts.copy;
             
             updateSortButton();
         }
