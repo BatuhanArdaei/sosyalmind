@@ -179,7 +179,7 @@
         .dock-item:hover i { color: var(--primary); transform: translateY(-3px); }
         .dock-item.taxi i { color: #FFD700; }
 
-        /* MODAL */
+        /* --- GENEL MODAL STİLLERİ --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 10000;
@@ -187,16 +187,32 @@
         }
         .modal-card {
             background: #181818; border: 1px solid rgba(255,255,255,0.1);
-            width: 80%; max-width: 320px; padding: 30px; border-radius: 30px; text-align: center; position: relative;
+            width: 85%; max-width: 340px; padding: 30px; border-radius: 30px; text-align: center; position: relative;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
         .modal-icon { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
         .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
         .modal-text { color: #fff; margin-bottom: 20px; font-size: 1.2rem; font-weight: 700; background: #252525; padding: 12px; border-radius: 12px; font-family: 'Inter', sans-serif;}
         .close-modal { position: absolute; top: 20px; right: 20px; color: #666; cursor: pointer; font-size: 1.2rem; }
+        
         .copy-btn {
             background: var(--primary); color: white; border: none; padding: 12px 20px;
             border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Outfit', sans-serif; font-size: 1rem;
         }
+
+        /* --- INSTAGRAM BUTONLARI (YENİ) --- */
+        .social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 15px; margin-bottom: 12px;
+            background: #252525; border: 1px solid var(--border-glass);
+            border-radius: 16px; color: #fff; font-family: 'Outfit', sans-serif;
+            font-size: 1rem; cursor: pointer; transition: 0.3s; font-weight: 600;
+        }
+        .social-btn:hover { background: var(--surface); border-color: var(--primary); transform: translateY(-2px); }
+        .social-btn i { font-size: 1.4rem; color: var(--primary); }
+        
     </style>
 </head>
 <body>
@@ -231,10 +247,7 @@
 
     <!-- CONTENT -->
     <div class="content-area">
-        <!-- Kategoriler -->
         <div id="gridView" class="grid-layout"></div>
-
-        <!-- Ürünler -->
         <div id="listView" class="list-view">
             <div class="list-header-row">
                 <div class="nav-back-btn" onclick="goBack()">
@@ -250,14 +263,12 @@
             </div>
             <div id="productsContainer" class="grid-layout"></div>
         </div>
-
-        <!-- FOOTER (Otomatik Çevirili) -->
         <div class="footer-branding" data-i18n="footer">
             Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır.
         </div>
     </div>
 
-    <!-- BOTTOM DOCK (Dil Entegreli) -->
+    <!-- BOTTOM DOCK -->
     <div class="bottom-dock">
         <button class="dock-item" onclick="openModal('wifiModal')">
             <i class="fas fa-wifi"></i> <span data-i18n="wifi">Wi-Fi</span>
@@ -271,7 +282,8 @@
         <button class="dock-item" onclick="shareMenu()">
             <i class="fas fa-share-nodes"></i> <span data-i18n="share">Paylaş</span>
         </button>
-        <button class="dock-item" onclick="openInsta()">
+        <!-- INSTAGRAM BUTONU (Pop-up açar) -->
+        <button class="dock-item" onclick="openModal('instaModal')">
             <i class="fab fa-instagram"></i> <span data-i18n="insta">Insta</span>
         </button>
     </div>
@@ -287,6 +299,25 @@
         </div>
     </div>
 
+    <!-- INSTAGRAM MODAL (YENİ) -->
+    <div id="instaModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="close-modal" onclick="closeModal('instaModal')"><i class="fas fa-times"></i></div>
+            <div class="modal-icon"><i class="fab fa-instagram"></i></div>
+            <div class="modal-title" data-i18n="instaTitle">Instagram</div>
+            
+            <!-- Buton 1 -->
+            <button onclick="openLink(INSTA_1_LINK)" class="social-btn">
+                <i class="fab fa-instagram"></i> <span data-i18n="instaBtn1">Restoran Hesabı</span>
+            </button>
+            
+            <!-- Buton 2 -->
+            <button onclick="openLink(INSTA_2_LINK)" class="social-btn">
+                <i class="fab fa-instagram"></i> <span data-i18n="instaBtn2">Şefin Hesabı</span>
+            </button>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -294,14 +325,18 @@
         const linkTL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTrIczjBfOYYZlHTC17u2iLnfk1aki4U9VG-E66uxiOB0CtCPJYo_hYOdgxKLbvMl8o6cc_7eUuqr8A/pub?output=csv";
         const linkEUR = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRB3BKM6zo6iiU0Z9IwUYlPYNyT5R8oHC8tYT_LTGS2eOxkxebowYQoSWtBPMp8Q1HDZmcJPlvxWA4F/pub?output=csv";
         
+        // --- İLETİŞİM BİLGİLERİ ---
         const TAXI_NUMARASI = "+905320000000"; 
         const WIFI_SIFRE = "Ertas2024"; 
-        const INSTAGRAM_LINK = "https://instagram.com/ertaspidekebap";
         const MAP_LINK = "https://maps.google.com/?q=Ertaş+Pide+Kebap+Salonu";
+        
+        // --- INSTAGRAM AYARLARI (YENİ) ---
+        const INSTA_1_LINK = "https://instagram.com/ertas_pide_kebap_corba";
+        const INSTA_2_LINK = "https://instagram.com/sosyalmind";
 
         let state = { lang: 'TR', currency: 'TL', data: [], grouped: {}, activeCat: null, view: 'grid', sortMode: 0 };
         
-        // --- MERKEZİ DİL SÖZLÜĞÜ ---
+        // --- DİL SÖZLÜĞÜ (Tam Entegre) ---
         const ui = { 
             TR: { 
                 searchPh: "Menüde arama yapın...", 
@@ -318,7 +353,11 @@
                 insta: "Insta",
                 wifiTitle: "Wi-Fi Şifresi",
                 copy: "Kopyala",
-                copied: "Kopyalandı!"
+                copied: "Kopyalandı!",
+                // Instagram Buton İsimleri
+                instaTitle: "Instagram",
+                instaBtn1: "Restoran Hesabı",
+                instaBtn2: "SosyalMind resmi Hesabı"
             }, 
             EN: { 
                 searchPh: "Search the menu...", 
@@ -335,7 +374,11 @@
                 insta: "Insta",
                 wifiTitle: "Wi-Fi Password",
                 copy: "Copy",
-                copied: "Copied!"
+                copied: "Copied!",
+                // Instagram Button Names
+                instaTitle: "Instagram",
+                instaBtn1: "Restaurant Page",
+                instaBtn2: "SosyalMind Page"
             } 
         };
 
@@ -464,12 +507,9 @@
                 state.activeCat = key; state.view = 'list';
                 document.getElementById('gridView').style.display = 'none';
                 document.getElementById('listView').style.display = 'block';
-                
-                // Kategori Başlığını Güncelle
                 const items = state.grouped[key];
                 const name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : key;
                 document.getElementById('pageTitle').innerText = name;
-                
                 renderList(items);
                 window.scrollTo(0,0);
                 hideLoading();
@@ -490,19 +530,24 @@
 
         // --- DOCK FUNCTIONS ---
         function openMap() { window.open(MAP_LINK, '_blank'); }
-        function openInsta() { window.open(INSTAGRAM_LINK, '_blank'); }
         function callTaxi() { window.location.href = "tel:" + TAXI_NUMARASI; }
-        function shareMenu() { if (navigator.share) { navigator.share({ title: 'Ertaş Pide & Kebap', url: window.location.href }); } else { alert("Link: " + window.location.href); } }
+        function openLink(url) { window.open(url, '_blank'); }
+        
+        function shareMenu() { 
+            if (navigator.share) { navigator.share({ title: 'Ertaş Pide & Kebap', url: window.location.href }); } 
+            else { alert("Link: " + window.location.href); } 
+        }
+        
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
         function copyWifi() {
             navigator.clipboard.writeText(WIFI_SIFRE).then(() => {
                 const btn = document.querySelector('.copy-btn');
-                btn.innerText = ui[state.lang].copied; // DİNAMİK DİL
+                btn.innerText = ui[state.lang].copied;
                 btn.style.background = "#4CAF50";
                 setTimeout(() => {
-                    btn.innerText = ui[state.lang].copy; // DİNAMİK DİL GERİ DÖNÜŞ
+                    btn.innerText = ui[state.lang].copy;
                     btn.style.background = "var(--primary)";
                 }, 2000);
             });
@@ -515,7 +560,6 @@
         function toggleLang() { state.lang = state.lang === 'TR' ? 'EN' : 'TR'; showLoading(); setTimeout(() => { updateUI(); if(state.view==='list') openCat(state.activeCat); else renderGrid(); hideLoading(); }, 600); }
         function toggleCurrency() { state.currency = state.currency === 'TL' ? 'EUR' : 'TL'; showLoading(); setTimeout(() => { updateUI(); if(state.view==='list') openCat(state.activeCat); else renderGrid(); hideLoading(); }, 600); }
 
-        // --- MERKEZİ DİL GÜNCELLEME FONKSİYONU ---
         function updateUI() {
             const texts = ui[state.lang];
 
@@ -523,7 +567,6 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if(texts[key]) {
-                    // Eğer footer gibi HTML içeriyorsa innerHTML, yoksa innerText
                     if(key === 'footer') el.innerHTML = texts[key];
                     else el.innerText = texts[key];
                 }
@@ -536,9 +579,7 @@
             document.getElementById('currencyBtn').classList.toggle('active', state.currency === 'EUR');
             document.getElementById('searchInput').placeholder = texts.searchPh;
             
-            // 3. Kopya butonu reset (Eğer kopyalandı yazısında kaldıysa düzelt)
             document.querySelector('.copy-btn').innerText = texts.copy;
-            
             updateSortButton();
         }
 
