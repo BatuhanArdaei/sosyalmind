@@ -23,6 +23,7 @@
             --radius: 20px;
         }
 
+        /* Kutu Modeli */
         *, *::before, *::after { box-sizing: border-box; }
 
         body {
@@ -39,11 +40,11 @@
             background-size: cover; background-position: center; opacity: 0.15; filter: blur(8px); z-index: -10;
         }
 
-        /* --- SİSLİ & KÜÇÜK LOGOLU LOADER --- */
+        /* --- YENİ SİSLİ LOADER --- */
         #preloader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000000; /* Arka plan zifiri siyah */
+            background-color: #000000;
             z-index: 99999;
             display: flex; justify-content: center; align-items: center;
             transition: opacity 0.6s ease, visibility 0.6s;
@@ -54,33 +55,31 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Merkezden dışa doğru karartma */
             background: radial-gradient(circle, 
-                rgba(0,0,0,0) 0%,       /* Tam merkez şeffaf (Logo net) */
-                rgba(0,0,0,0.4) 20%,    /* Hafif kararma başlar */
-                rgba(0,0,0,0.9) 50%,    /* İyice kararır */
-                #000000 100%            /* Kenarlar tam siyah */
+                rgba(0,0,0,0) 0%, 
+                rgba(0,0,0,0.4) 20%, 
+                rgba(0,0,0,0.9) 50%, 
+                #000000 100%
             );
             pointer-events: none;
-            z-index: 2; /* Videonun üzerinde sis olsun */
+            z-index: 2;
         }
 
         #preloader.loader-hidden {
             opacity: 0; visibility: hidden; pointer-events: none;
         }
 
-        /* VİDEO AYARLARI (Küçültüldü ve Ortalı) */
+        /* Video Ayarları */
         #preloader video {
-            width: 180px;  /* Logo boyutu (Küçültüldü) */
-            height: 180px; /* Kare format */
+            width: 180px;
+            height: 180px;
             object-fit: contain;
-            border-radius: 50%; /* Yuvarlak ışık hüzmesi etkisi */
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15); /* Arkaya hafif beyaz ışık yayma */
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15);
             position: relative;
             z-index: 1;
         }
         #preloader video::-webkit-media-controls { display: none !important; }
-
 
         /* --- HEADER --- */
         .cinematic-header {
@@ -198,7 +197,7 @@
             padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; cursor: pointer;
         }
 
-        /* FOOTER */
+        /* FOOTER BRANDING */
         .footer-branding {
             text-align: center; padding: 20px 10px 40px 10px; font-family: 'Outfit', sans-serif;
             font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.5px;
@@ -302,7 +301,7 @@
             <div id="productsContainer" class="grid-layout"></div>
         </div>
 
-        <!-- SOSYALMIND İMZASI -->
+        <!-- SOSYALMIND İMZASI (Dinamik Dilli) -->
         <div class="footer-branding">
             Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır.
         </div>
@@ -343,9 +342,21 @@
         const MAP_LINK = "https://maps.google.com/?q=Ertaş+Pide+Kebap+Salonu";
 
         let state = { lang: 'TR', currency: 'TL', data: [], grouped: {}, activeCat: null, view: 'grid', sortMode: 0 };
+        
+        // DİL AYARLARI (Footer eklendi)
         const ui = { 
-            TR: { footer-branding: "Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır.", searchPh: "Arama yapın...", back: "GERİ DÖN", unit: "ÇEŞİT", langLabel: "🇬🇧 EN", sort: ["Sırala", "En Düşük", "En Yüksek"] }, 
-            EN: { footer-branding: "This website produced <span>SosyalMind</span>" searchPh: "Search...", back: "GO BACK", unit: "ITEMS", langLabel: "🇹🇷 TR", sort: ["Sort", "Lowest", "Highest"] } 
+            TR: { 
+                searchPh: "Arama yapın...", back: "GERİ DÖN", unit: "ÇEŞİT", 
+                langLabel: "🇬🇧 EN", 
+                sort: ["Sırala", "En Düşük", "En Yüksek"],
+                footer: "Bu İşletme <span>SosyalMind</span> tarafından hazırlanmıştır."
+            }, 
+            EN: { 
+                searchPh: "Search...", back: "GO BACK", unit: "ITEMS", 
+                langLabel: "🇹🇷 TR", 
+                sort: ["Sort", "Lowest", "Highest"],
+                footer: "This Business is prepared by <span>SosyalMind</span>."
+            } 
         };
 
         // --- LOADER YÖNETİMİ ---
@@ -360,7 +371,7 @@
             setTimeout(() => { 
                 loader.classList.add('loader-hidden');
                 document.body.style.overflow = 'auto'; 
-            }, 700); // Biraz daha uzun süre göster ki efekt belli olsun
+            }, 700); 
         }
 
         // --- INIT ---
@@ -517,6 +528,10 @@
             document.getElementById('langBtn').classList.toggle('active', state.lang === 'EN');
             document.getElementById('currencyBtn').classList.toggle('active', state.currency === 'EUR');
             document.getElementById('searchInput').placeholder = ui[state.lang].searchPh;
+            
+            // FOOTER METNİNİ GÜNCELLE
+            document.querySelector('.footer-branding').innerHTML = ui[state.lang].footer;
+            
             updateSortButton();
         }
 
