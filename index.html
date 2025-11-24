@@ -23,10 +23,7 @@
             --radius: 20px;
         }
 
-        /* Kutu Modeli Sıfırlama (Taşmaları engeller) */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
 
         body {
             margin: 0; background-color: var(--bg-deep); color: var(--text-white);
@@ -42,33 +39,47 @@
             background-size: cover; background-position: center; opacity: 0.15; filter: blur(8px); z-index: -10;
         }
 
-        /* --- YENİ YÜKLEME EKRANI (Video Fix) --- */
-        .global-loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000000; z-index: 99999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s;
+        /* --- SİSLİ & KÜÇÜK LOGOLU LOADER --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000000; /* Arka plan zifiri siyah */
+            z-index: 99999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
         }
-        .global-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        /* VIDEO STİLİ - Kontrolleri Gizle */
-        .loader-video {
-            width: 180px; 
-            height: auto;
-            mix-blend-mode: screen; 
-            margin-bottom: 10px;
-            pointer-events: none; /* Tıklamayı engeller */
+
+        /* SİS EFEKTİ (Vignette) */
+        #preloader::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* Merkezden dışa doğru karartma */
+            background: radial-gradient(circle, 
+                rgba(0,0,0,0) 0%,       /* Tam merkez şeffaf (Logo net) */
+                rgba(0,0,0,0.4) 20%,    /* Hafif kararma başlar */
+                rgba(0,0,0,0.9) 50%,    /* İyice kararır */
+                #000000 100%            /* Kenarlar tam siyah */
+            );
+            pointer-events: none;
+            z-index: 2; /* Videonun üzerinde sis olsun */
         }
-        /* Tarayıcı video kontrollerini zorla gizle */
-        .loader-video::-webkit-media-controls { display: none !important; }
-        .loader-video::-webkit-media-controls-enclosure { display: none !important; }
-        
-        .loading-text {
-            font-family: 'Outfit', sans-serif; font-weight: 800; 
-            letter-spacing: 4px; color: #fff; font-size: 1rem;
-            animation: pulse 2s infinite; text-transform: uppercase; opacity: 0.8;
+
+        #preloader.loader-hidden {
+            opacity: 0; visibility: hidden; pointer-events: none;
         }
-        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* VİDEO AYARLARI (Küçültüldü ve Ortalı) */
+        #preloader video {
+            width: 180px;  /* Logo boyutu (Küçültüldü) */
+            height: 180px; /* Kare format */
+            object-fit: contain;
+            border-radius: 50%; /* Yuvarlak ışık hüzmesi etkisi */
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15); /* Arkaya hafif beyaz ışık yayma */
+            position: relative;
+            z-index: 1;
+        }
+        #preloader video::-webkit-media-controls { display: none !important; }
 
 
         /* --- HEADER --- */
@@ -101,23 +112,19 @@
             cursor: pointer; padding: 8px; transition: 0.3s;
         }
 
-        /* --- ARAMA POPUP (Taşma Düzeltildi) --- */
+        /* --- ARAMA POPUP --- */
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.98); z-index: 2000;
             display: flex; flex-direction: column; padding: 20px;
             opacity: 0; visibility: hidden; transition: 0.3s;
             transform: translateY(-20px);
-            box-sizing: border-box; /* Kenarlardan taşmayı engeller */
+            box-sizing: border-box;
         }
         .search-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         
-        .search-header { 
-            display: flex; justify-content: flex-end; margin-bottom: 20px; width: 100%;
-        }
-        .close-search { 
-            color: #fff; font-size: 1.8rem; background: none; border: none; cursor: pointer; padding: 10px;
-        }
+        .search-header { display: flex; justify-content: flex-end; margin-bottom: 20px; width: 100%; }
+        .close-search { color: #fff; font-size: 1.8rem; background: none; border: none; cursor: pointer; padding: 10px; }
         
         .search-input {
             width: 100%; background: #1a1a1a; border: 1px solid #333;
@@ -137,7 +144,7 @@
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
         }
 
-        /* --- KART YAPISI (Fiyat Düzeltildi) --- */
+        /* --- KART YAPISI --- */
         .card-base {
             position: relative; border-radius: var(--radius); overflow: hidden;
             cursor: pointer; border: 1px solid var(--border-glass);
@@ -154,12 +161,10 @@
         }
         .card-base:hover .card-img { transform: scale(1.05); filter: brightness(1); }
 
-        /* Overlay: Alt kısmı daha koyu yaparak fiyatı belirginleştirdik */
         .card-overlay {
             position: relative; z-index: 1;
             background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%);
-            padding: 20px 15px 15px 15px; /* Alt boşluğu biraz azalttık */
-            width: 100%;
+            padding: 20px 15px 15px 15px; width: 100%;
         }
 
         .card-title {
@@ -172,15 +177,11 @@
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
             margin-bottom: 8px;
         }
-        
-        /* Fiyatı daha belirgin ve ortada yaptım */
         .card-price {
             font-family: 'Outfit', sans-serif;
             font-size: 1.3rem; font-weight: 800; color: var(--primary);
-            text-align: right; 
-            text-shadow: 0 0 15px rgba(0,0,0,1); /* Siyah gölge ile okunurluğu artırdık */
-            padding-top: 5px;
-            border-top: 1px solid rgba(255,255,255,0.1); /* İnce çizgi ile ayırdık */
+            text-align: right; text-shadow: 0 0 15px rgba(0,0,0,1);
+            padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         /* NAV & SORT */
@@ -250,12 +251,11 @@
 </head>
 <body>
 
-    <!-- YÜKLEME EKRANI (VIDEO - Tıklama kapalı) -->
-    <div id="globalLoader" class="global-loader">
-        <video autoplay loop muted playsinline class="loader-video">
-            <source src="https://res.cloudinary.com/douh5tbmk/video/upload/v1763962046/sm_logo_animasyon_hoec4y.mp4" type="video/mp4">
+    <!-- YÜKLEME EKRANI (SİSLİ & ORTALI) -->
+    <div id="preloader">
+        <video autoplay muted loop playsinline>
+            <source src="https://res.cloudinary.com/douh5tbmk/video/upload/v1763962054/sm_logo_animasyon_bdso9x.mp4" type="video/mp4">
         </video>
-        <div class="loading-text">ERTAŞ PİDE</div>
     </div>
 
     <!-- Header -->
@@ -311,9 +311,9 @@
     <!-- BOTTOM DOCK -->
     <div class="bottom-dock">
         <button class="dock-item" onclick="openModal('wifiModal')"><i class="fas fa-wifi"></i> <span>Wi-Fi</span></button>
-        <button class="dock-item" onclick="openMap()"><i class="fas fa-location-dot"></i> <span>Location</span></button>
-        <button class="dock-item taxi" onclick="callTaxi()"><i class="fas fa-taxi"></i> <span>Taxi</span></button>
-        <button class="dock-item" onclick="shareMenu()"><i class="fas fa-share-nodes"></i> <span>Share</span></button>
+        <button class="dock-item" onclick="openMap()"><i class="fas fa-location-dot"></i> <span>Konum</span></button>
+        <button class="dock-item taxi" onclick="callTaxi()"><i class="fas fa-taxi"></i> <span>Taksi</span></button>
+        <button class="dock-item" onclick="shareMenu()"><i class="fas fa-share-nodes"></i> <span>Paylaş</span></button>
         <button class="dock-item" onclick="openInsta()"><i class="fab fa-instagram"></i> <span>Insta</span></button>
     </div>
 
@@ -348,9 +348,20 @@
             EN: { searchPh: "Search...", back: "GO BACK", unit: "ITEMS", langLabel: "🇹🇷 TR", sort: ["Sort", "Lowest", "Highest"] } 
         };
 
-        // --- LOADER ---
-        function showLoading() { document.getElementById('globalLoader').classList.remove('hidden'); }
-        function hideLoading() { const l=document.getElementById('globalLoader'); setTimeout(()=>{l.classList.add('hidden')},600); }
+        // --- LOADER YÖNETİMİ ---
+        function showLoading() { 
+            const loader = document.getElementById('preloader');
+            loader.classList.remove('loader-hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+        
+        function hideLoading() { 
+            const loader = document.getElementById('preloader');
+            setTimeout(() => { 
+                loader.classList.add('loader-hidden');
+                document.body.style.overflow = 'auto'; 
+            }, 700); // Biraz daha uzun süre göster ki efekt belli olsun
+        }
 
         // --- INIT ---
         document.getElementById('wifiPassText').innerText = WIFI_SIFRE;
@@ -469,7 +480,7 @@
                 renderList(items);
                 window.scrollTo(0,0);
                 hideLoading();
-            }, 600);
+            }, 500);
         }
 
         function goBack() {
@@ -481,10 +492,10 @@
                 document.getElementById('searchInput').value = "";
                 state.sortMode = 0; updateSortButton(); renderGrid();
                 hideLoading();
-            }, 600);
+            }, 500);
         }
 
-        // --- DOCK ---
+        // --- DOCK FUNCTIONS ---
         function openMap() { window.open(MAP_LINK, '_blank'); }
         function openInsta() { window.open(INSTAGRAM_LINK, '_blank'); }
         function callTaxi() { window.location.href = "tel:" + TAXI_NUMARASI; }
