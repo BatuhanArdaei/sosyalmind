@@ -3,368 +3,488 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ertaş Pide & Kebap Salonu</title>
+    <title>Ertaş Pide & Kebap | Modern</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- YENİ FONT: OUTFIT (Başlıklar) & INTER (Metinler) - %100 Modern -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-color: #141414;
-            --card-bg: #1f1f1f;
-            --accent: #d4af37;
-            --text-main: #ffffff;
-            --text-sub: #9ca3af;
-            --glass: rgba(20, 20, 20, 0.85);
+            --primary: #FF3B3B; 
+            --primary-dark: #D32F2F;
+            
+            --bg-deep: #050505;
+            --surface: #121212;
+            --surface-glass: rgba(18, 18, 18, 0.85);
+            
+            --text-white: #FFFFFF;
+            --text-muted: #9CA3AF;
+            
+            --border-glass: rgba(255, 255, 255, 0.08);
             --radius: 24px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            margin: 0; background-color: var(--bg-color); color: var(--text-main); font-family: 'DM Sans', sans-serif; padding-bottom: 80px;
+            margin: 0; background-color: var(--bg-deep); color: var(--text-white);
+            font-family: 'Inter', sans-serif; /* Okunabilir modern metin */
+            overflow-x: hidden; 
+            padding-bottom: 120px;
+        }
+
+        /* ARKA PLAN */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            /* Temsili Dükkan Resmi */
+            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop'); 
+            background-size: cover; background-position: center; opacity: 0.15; filter: blur(8px); z-index: -10;
         }
 
         /* HEADER */
-        .glass-header {
-            position: sticky; top: 0; z-index: 1000; background: var(--glass);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 15px 20px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .cinematic-header {
+            position: sticky; top: 0; z-index: 900; 
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 15px 24px; border-bottom: 1px solid var(--border-glass);
         }
-
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .brand-name { font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
-        .brand-name span { color: var(--accent); }
-
-        .settings-group { display: flex; gap: 8px; }
-        .toggle-btn {
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.05);
-            color: #fff; padding: 8px 14px; border-radius: 12px; font-size: 0.8rem;
-            font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'DM Sans', sans-serif;
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        
+        /* Modern Logo Fontu */
+        .brand-logo { 
+            font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; 
+            color: #fff; text-transform: uppercase; letter-spacing: -0.5px;
         }
-        .toggle-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+        .brand-logo span { color: var(--primary); }
 
-        /* ARAMA */
-        .search-wrapper { position: relative; }
+        .controls { display: flex; gap: 8px; }
+        .ctrl-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); 
+            color: var(--text-muted); padding: 8px 16px; border-radius: 12px; font-size: 0.8rem; 
+            font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Outfit', sans-serif;
+        }
+        .ctrl-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 15px rgba(255, 59, 59, 0.3); }
+
+        .search-container { position: relative; }
         .search-input {
-            width: 100%; background: #252525; border: 1px solid rgba(255,255,255,0.05);
-            padding: 14px 20px 14px 45px; border-radius: 16px; color: white; font-size: 0.95rem; outline: none; transition: 0.3s;
+            width: 100%; background: #1A1A1A; border: 1px solid var(--border-glass);
+            padding: 16px 20px 16px 50px; border-radius: 16px; color: #fff; font-size: 1rem; 
+            font-family: 'Inter', sans-serif; outline: none; transition: 0.3s;
         }
-        .search-input:focus { background: #2a2a2a; border-color: var(--accent); }
-        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
+        .search-input:focus { background: #222; border-color: var(--primary); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
 
-        /* CONTAINER */
-        .container { padding: 25px 20px; max-width: 800px; margin: 0 auto; }
+        /* CONTENT */
+        .content-area { max-width: 900px; margin: 0 auto; padding: 20px; }
+        #loading { text-align: center; margin-top: 60px; font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--primary); }
 
-        /* GRID VIEW */
-        .grid-view { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .cat-card {
-            position: relative; background: var(--card-bg); border-radius: var(--radius);
-            overflow: hidden; aspect-ratio: 1 / 1.15; cursor: pointer; transition: transform 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        /* GRID LAYOUT */
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .card-base {
+            position: relative; border-radius: var(--radius); overflow: hidden;
+            cursor: pointer; border: 1px solid var(--border-glass);
+            background: #111; aspect-ratio: 3 / 4; 
+            display: flex; flex-direction: column; justify-content: flex-end;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .cat-card:active { transform: scale(0.97); }
-        .cat-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transition: 0.5s; }
-        .cat-card:hover .cat-img { opacity: 0.6; transform: scale(1.05); }
-        .cat-info {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
-        }
-        .cat-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-        .cat-count { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+        .card-base:active { transform: scale(0.96); }
 
-        /* LIST VIEW */
-        .list-view { display: none; animation: slideUp 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
-        .nav-back { display: flex; align-items: center; margin-bottom: 25px; cursor: pointer; color: var(--text-sub); }
-        .nav-back i { font-size: 1.2rem; margin-right: 10px; color: var(--accent); }
-        .nav-title { font-size: 1.5rem; font-weight: 700; color: #fff; margin-left: auto; }
-
-        .menu-item {
-            background: var(--card-bg); border-radius: 20px; padding: 12px;
-            margin-bottom: 12px; display: flex; gap: 15px; border: 1px solid rgba(255,255,255,0.03);
+        .card-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; transition: transform 0.6s ease; filter: brightness(0.8); z-index: 0;
         }
-        .item-img { width: 95px; height: 95px; border-radius: 16px; object-fit: cover; background: #000; }
-        .item-details { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 4px 0; }
-        .item-name { font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.3; }
-        .item-desc { 
-            font-size: 0.8rem; color: var(--text-sub); margin-top: 5px; line-height: 1.4;
+        .card-base:hover .card-img { transform: scale(1.05); filter: brightness(1); }
+
+        .card-overlay {
+            position: relative; z-index: 1;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+            padding: 20px 15px; width: 100%;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; color: #fff;
+            margin-bottom: 4px; line-height: 1.1; letter-spacing: -0.5px;
+        }
+        .card-subtitle {
+            font-size: 0.8rem; color: #ccc; font-weight: 400;
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
-        .item-price { font-size: 1.15rem; font-weight: 700; color: var(--accent); align-self: flex-end; }
+        .card-price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem; font-weight: 800; color: var(--primary);
+            margin-top: 8px; text-align: right;
+        }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        #loading { text-align: center; margin-top: 50px; color: var(--accent); }
+        /* SIRALAMA */
+        .sort-bar { display: none; justify-content: flex-end; margin-bottom: 15px; }
+        .sort-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: #fff;
+            padding: 8px 15px; border-radius: 50px; font-size: 0.8rem; cursor: pointer;
+            display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
+        }
+
+        /* Nav Header */
+        .list-view { display: none; animation: fadeUp 0.4s ease; }
+        .nav-header { display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; }
+        .nav-back-icon {
+            width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: #fff; margin-right: 15px; 
+            border: 1px solid var(--border-glass); transition: 0.2s;
+        }
+        .nav-header:hover .nav-back-icon { background: var(--primary); border-color: var(--primary); }
+
+        /* --- BOTTOM DOCK --- */
+        .bottom-dock {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 420px;
+            background: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 20px; z-index: 9999;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .dock-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: none; border: none; cursor: pointer; color: #666;
+            transition: 0.3s; flex: 1;
+        }
+        .dock-item i { font-size: 1.4rem; margin-bottom: 4px; transition: 0.3s; }
+        .dock-item span { font-size: 0.65rem; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; }
+        
+        .dock-item:hover, .dock-item:active { color: #fff; }
+        .dock-item:hover i { color: var(--primary); transform: translateY(-3px); }
+
+        /* TAXI BUTTON SPECIAL STYLE */
+        .dock-item.taxi i { 
+            color: #FFD700; /* Taksi Sarısı */
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 10000;
+            display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px);
+        }
+        .modal-card {
+            background: #181818; border: 1px solid rgba(255,255,255,0.1);
+            width: 80%; max-width: 320px; padding: 30px; border-radius: 30px;
+            text-align: center; position: relative;
+        }
+        .modal-icon { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
+        .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+        .modal-text { color: #fff; margin-bottom: 20px; font-size: 1.2rem; font-weight: 700; background: #252525; padding: 12px; border-radius: 12px; font-family: 'Inter', sans-serif; letter-spacing: 1px;}
+        .close-modal { position: absolute; top: 20px; right: 20px; color: #666; cursor: pointer; font-size: 1.2rem; }
+        .copy-btn {
+            background: var(--primary); color: white; border: none; padding: 12px 20px;
+            border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Outfit', sans-serif; font-size: 1rem;
+        }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 400px) { .grid-layout { grid-template-columns: 1fr; } .card-base { aspect-ratio: 21 / 10; } }
     </style>
 </head>
 <body>
 
-    <div class="glass-header">
-        <div class="header-top">
-            <div class="brand-name">Ertaş Pide <span>& Kebap Salonu</span></div>
-            <div class="settings-group">
-                <button class="toggle-btn" id="langBtn" onclick="toggleLang()">TR</button>
-                <button class="toggle-btn" id="currencyBtn" onclick="toggleCurrency()">₺</button>
+    <!-- Header -->
+    <header class="cinematic-header">
+        <div class="header-row">
+            <div class="brand-logo">Ertaş <span>Pide</span></div>
+            <div class="controls">
+                <button class="ctrl-btn" id="langBtn" onclick="toggleLang()">TR</button>
+                <button class="ctrl-btn" id="currencyBtn" onclick="toggleCurrency()">₺</button>
             </div>
         </div>
-        <div class="search-wrapper">
+        <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Arama yapın...">
+            <input type="text" id="searchInput" class="search-input" placeholder="Menüde arama yapın...">
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="content-area">
+        <div id="loading">YÜKLENİYOR...</div>
+
+        <!-- Kategoriler -->
+        <div id="gridView" class="grid-layout"></div>
+
+        <!-- Ürün Listesi -->
+        <div id="listView" class="list-view">
+            <div class="nav-header" onclick="goBack()">
+                <div class="nav-back-icon"><i class="fas fa-arrow-left"></i></div>
+                <div>
+                    <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;" id="backText">GERİ DÖN</div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800;" id="pageTitle">KATEGORİ</div>
+                </div>
+            </div>
+
+            <div class="sort-bar" id="sortControl" style="display: flex;">
+                <button class="sort-btn" onclick="toggleSort()">
+                    <i class="fas fa-sort"></i> <span id="sortText">Sıralama: Varsayılan</span>
+                </button>
+            </div>
+
+            <div id="productsContainer" class="grid-layout"></div>
         </div>
     </div>
 
-    <div class="container">
-        <div id="loading">Menü Hazırlanıyor...</div>
-        <div id="gridView" class="grid-view"></div>
-        <div id="listView" class="list-view">
-            <div class="nav-back" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i>
-                <span id="backText">Menüye Dön</span>
-                <span class="nav-title" id="pageTitle"></span>
-            </div>
-            <div id="productsContainer"></div>
+    <!-- ALT DOCK MENÜ -->
+    <div class="bottom-dock">
+        <!-- Wi-Fi -->
+        <button class="dock-item" onclick="openModal('wifiModal')">
+            <i class="fas fa-wifi"></i> <span>Wi-Fi</span>
+        </button>
+        <!-- Konum -->
+        <button class="dock-item" onclick="openMap()">
+            <i class="fas fa-location-dot"></i> <span>Konum</span>
+        </button>
+        
+        <!-- TAKSİ BUTONU (YENİ) -->
+        <button class="dock-item taxi" onclick="callTaxi()">
+            <i class="fas fa-taxi"></i> <span>Taksi</span>
+        </button>
+        
+        <!-- Paylaş -->
+        <button class="dock-item" onclick="shareMenu()">
+            <i class="fas fa-share-nodes"></i> <span>Paylaş</span>
+        </button>
+        <!-- Instagram -->
+        <button class="dock-item" onclick="openInsta()">
+            <i class="fab fa-instagram"></i> <span>Insta</span>
+        </button>
+    </div>
+
+    <!-- WIFI POPUP -->
+    <div id="wifiModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="close-modal" onclick="closeModal('wifiModal')"><i class="fas fa-times"></i></div>
+            <div class="modal-icon"><i class="fas fa-wifi"></i></div>
+            <div class="modal-title">Wi-Fi Şifresi</div>
+            <div class="modal-text" id="wifiPassText">...</div>
+            <button class="copy-btn" onclick="copyWifi()">Kopyala</button>
         </div>
     </div>
 
     <script>
-        // =============================================================
-        // LİNKLER (İKİ AYRI TABLO)
-        // =============================================================
-        
-        // 1. ANA TABLO (TL, İsimler, Fotolar)
+        // --- AYARLAR ---
         const linkTL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTrIczjBfOYYZlHTC17u2iLnfk1aki4U9VG-E66uxiOB0CtCPJYo_hYOdgxKLbvMl8o6cc_7eUuqr8A/pub?output=csv";
+        const linkEUR = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRB3BKM6zo6iiU0Z9IwUYlPYNyT5R8oHC8tYT_LTGS2eOxkxebowYQoSWtBPMp8Q1HDZmcJPlvxWA4F/pub?output=csv";
         
-        // 2. EURO TABLOSU (Sadece İsim ve Euro Fiyatı)
-        const linkEUR = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTrIczjBfOYYZlHTC17u2iLnfk1aki4U9VG-E66uxiOB0CtCPJYo_hYOdgxKLbvMl8o6cc_7eUuqr8A/pub?output=csv";
+        // !!! BİLGİLERİ GÜNCELLE !!!
+        const TAXI_NUMARASI = "+905320000000"; // Taksi Durağı veya Şahıs Numarası (Başında +90 olsun)
+        const WIFI_SIFRE = "Ertas2024"; 
+        const INSTAGRAM_LINK = "https://instagram.com/ertaspidekebap";
+        const MAP_LINK = "https://maps.google.com/?q=Ertaş+Pide+Kebap+Salonu";
 
-        // =============================================================
-
-        let state = {
-            lang: 'TR', currency: 'TL',
-            data: [], grouped: {}, activeCat: null, view: 'grid'
+        let state = { lang: 'TR', currency: 'TL', data: [], grouped: {}, activeCat: null, view: 'grid', sortMode: 0 };
+        const ui = { 
+            TR: { search: "Arama...", back: "GERİ DÖN", unit: "ÇEŞİT", sort: ["Sıralama: Varsayılan", "Sıralama: Artan Fiyat", "Sıralama: Azalan Fiyat"] }, 
+            EN: { search: "Search...", back: "GO BACK", unit: "ITEMS", sort: ["Sort: Default", "Sort: Low to High", "Sort: High to Low"] } 
         };
 
-        const textRes = {
-            TR: { search: "Arama yapın...", back: "Menüye Dön", unit: "Çeşit" },
-            EN: { search: "Search menu...", back: "Back to Menu", unit: "Items" }
-        };
+        // --- INIT ---
+        document.getElementById('wifiPassText').innerText = WIFI_SIFRE;
 
-        // İki tabloyu aynı anda çekip birleştirme
         document.addEventListener('DOMContentLoaded', () => {
-            Promise.all([
-                fetch(linkTL).then(r => r.text()),
-                fetch(linkEUR).then(r => r.text())
-            ]).then(([csvTL, csvEUR]) => {
-                
-                const dataTL = csvToObjects(csvTL);
-                const dataEUR = csvToObjects(csvEUR);
-                
-                // VERİLERİ BİRLEŞTİR (MERGE)
-                state.data = mergeData(dataTL, dataEUR);
-                
+            Promise.all([fetch(linkTL).then(r=>r.text()), fetch(linkEUR).then(r=>r.text())])
+            .then(([csvTL, csvEUR]) => {
+                state.data = mergeData(csvToObjects(csvTL), csvToObjects(csvEUR));
                 groupData();
                 renderGrid();
                 document.getElementById('loading').style.display = 'none';
                 updateUI();
-
-            }).catch(err => {
-                document.getElementById('loading').innerText = "Hata: Veriler alınamadı. İnternet bağlantınızı kontrol edin.";
-                console.error(err);
             });
         });
 
-        // BİRLEŞTİRME FONKSİYONU
-        function mergeData(mainList, euroList) {
-            return mainList.map(item => {
-                // İsimleri eşleştirirken boşlukları temizle ve küçült (Hata payını azaltmak için)
-                const safeName = item.UrunAdi ? item.UrunAdi.trim().toLowerCase() : "";
-                
-                // Euro listesinde bu ürünü bul
-                const euroMatch = euroList.find(e => 
-                    (e.UrunAdi && e.UrunAdi.trim().toLowerCase() === safeName)
-                );
-
-                // Euro fiyatını ekle (Yoksa boş bırak)
-                item.Fiyat_EUR = euroMatch ? euroMatch.Fiyat : "";
-                
-                // Ana fiyatı Fiyat_TL olarak kaydet
-                item.Fiyat_TL = item.Fiyat; 
-
+        function mergeData(tl, eur) {
+            return tl.map(item => {
+                const clean = item.UrunAdi ? item.UrunAdi.trim().toLowerCase() : "";
+                const match = eur.find(e => e.UrunAdi && e.UrunAdi.trim().toLowerCase() === clean);
+                item.Fiyat_EUR = match ? match.Fiyat : ""; item.Fiyat_TL = item.Fiyat;
                 return item;
             });
         }
 
         function groupData() {
             state.grouped = {};
-            state.data.forEach(item => {
-                if(!item.Kategori) return;
-                if(!state.grouped[item.Kategori]) state.grouped[item.Kategori] = [];
-                state.grouped[item.Kategori].push(item);
+            state.data.forEach(i => {
+                if(!i.Kategori) return;
+                if(!state.grouped[i.Kategori]) state.grouped[i.Kategori] = [];
+                state.grouped[i.Kategori].push(i);
             });
+        }
+
+        function csvToObjects(csv) {
+            const lines = csv.split("\n");
+            const headers = lines[0].split(",").map(h => h.trim().replace(/[\r"]/g, ""));
+            return lines.slice(1).map(line => {
+                const data = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                return headers.reduce((obj, nextKey, index) => {
+                    obj[nextKey] = data[index] ? data[index].replace(/[\r"]/g, "") : "";
+                    return obj;
+                }, {});
+            }).filter(row => row.Kategori);
         }
 
         // --- RENDER ---
         function renderGrid() {
             const grid = document.getElementById('gridView');
             grid.innerHTML = "";
-            
-            Object.keys(state.grouped).forEach(catKey => {
-                const items = state.grouped[catKey];
-                let cover = "https://placehold.co/400x400/1f1f1f/d4af37?text=" + catKey;
-                const imgItem = items.find(i => i.ResimLink && i.ResimLink.length > 10);
-                if(imgItem) cover = imgItem.ResimLink;
+            Object.keys(state.grouped).forEach(key => {
+                const items = state.grouped[key];
+                let cover = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80";
+                const validImg = items.find(i => i.ResimLink && i.ResimLink.length > 15);
+                if(validImg) cover = validImg.ResimLink;
+                
+                const name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : key;
 
-                let name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : catKey;
-
-                const div = document.createElement('div');
-                div.className = 'cat-card';
-                div.onclick = () => openCategory(catKey);
-                div.innerHTML = `
-                    <img src="${cover}" class="cat-img" loading="lazy">
-                    <div class="cat-info">
-                        <div class="cat-title">${name}</div>
-                        <div class="cat-count">${items.length} ${textRes[state.lang].unit}</div>
+                const card = document.createElement('div');
+                card.className = 'card-base';
+                card.onclick = () => openCat(key);
+                card.innerHTML = `
+                    <img src="${cover}" class="card-img" loading="lazy">
+                    <div class="card-overlay">
+                        <div class="card-title">${name}</div>
+                        <div class="card-subtitle">${items.length} ${ui[state.lang].unit}</div>
                     </div>
                 `;
-                grid.appendChild(div);
+                grid.appendChild(card);
             });
         }
 
-        function renderList(items) {
+        function renderList(originalItems) {
             const container = document.getElementById('productsContainer');
             container.innerHTML = "";
-
-            if(!items || items.length === 0) {
-                container.innerHTML = `<div style="text-align:center;color:#666;margin-top:20px;">Ürün bulunamadı.</div>`;
-                return;
+            
+            // Sıralama
+            let items = [...originalItems];
+            if (state.sortMode !== 0) {
+                items.sort((a, b) => {
+                    let pA = state.currency === 'TL' ? parseFloat(a.Fiyat_TL) : parseFloat(a.Fiyat_EUR);
+                    let pB = state.currency === 'TL' ? parseFloat(b.Fiyat_TL) : parseFloat(b.Fiyat_EUR);
+                    if(isNaN(pA)) pA = -1; if(isNaN(pB)) pB = -1;
+                    return state.sortMode === 1 ? pA - pB : pB - pA;
+                });
             }
 
-            items.forEach(food => {
-                // Dil
-                let name = (state.lang === 'EN' && food.UrunAdi_EN) ? food.UrunAdi_EN : food.UrunAdi;
-                let desc = (state.lang === 'EN' && food.Aciklama_EN) ? food.Aciklama_EN : food.Aciklama;
+            if(!items.length) { container.innerHTML = "<div style='color:#777; width:200%; text-align:center'>Sonuç yok.</div>"; return; }
 
-                // Fiyat
-                let priceDisplay = "";
-                if(state.currency === 'TL') {
-                    priceDisplay = food.Fiyat_TL ? `${food.Fiyat_TL} ₺` : "-";
-                } else {
-                    priceDisplay = food.Fiyat_EUR ? `${food.Fiyat_EUR} €` : "-";
-                }
+            items.forEach(i => {
+                const name = (state.lang === 'EN' && i.UrunAdi_EN) ? i.UrunAdi_EN : i.UrunAdi;
+                const desc = (state.lang === 'EN' && i.Aciklama_EN) ? i.Aciklama_EN : i.Aciklama;
+                const price = state.currency === 'TL' ? (i.Fiyat_TL ? i.Fiyat_TL + ' ₺' : '') : (i.Fiyat_EUR ? i.Fiyat_EUR + ' €' : '');
+                const img = (i.ResimLink && i.ResimLink.length > 15) ? i.ResimLink : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80";
 
-                let img = (food.ResimLink && food.ResimLink.length > 10) ? food.ResimLink : "https://placehold.co/150x150/222/d4af37?text=Ertaş";
-
-                const div = document.createElement('div');
-                div.className = 'menu-item';
-                div.innerHTML = `
-                    <img src="${img}" class="item-img" loading="lazy">
-                    <div class="item-details">
-                        <div>
-                            <div class="item-name">${name}</div>
-                            <div class="item-desc">${desc}</div>
-                        </div>
-                        <div class="item-price">${priceDisplay}</div>
+                const el = document.createElement('div');
+                el.className = 'card-base';
+                el.innerHTML = `
+                    <img src="${img}" class="card-img" loading="lazy">
+                    <div class="card-overlay">
+                        <div class="card-title">${name}</div>
+                        <div class="card-subtitle" style="-webkit-line-clamp: 2;">${desc}</div>
+                        <div class="card-price">${price}</div>
                     </div>
                 `;
-                container.appendChild(div);
+                container.appendChild(el);
             });
         }
 
-        // --- ETKİLEŞİM ---
-        function openCategory(catKey) {
-            state.activeCat = catKey;
-            state.view = 'list';
+        // --- ACTIONS ---
+        function openCat(key) {
+            state.activeCat = key; state.view = 'list';
             document.getElementById('gridView').style.display = 'none';
             document.getElementById('listView').style.display = 'block';
+            document.querySelector('.sort-bar').style.display = 'flex';
             
-            let items = state.grouped[catKey];
-            let name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : catKey;
+            const items = state.grouped[key];
+            const name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : key;
             document.getElementById('pageTitle').innerText = name;
-
+            
             renderList(items);
             window.scrollTo(0,0);
             document.getElementById('searchInput').value = "";
         }
 
         function goBack() {
-            state.activeCat = null;
-            state.view = 'grid';
+            state.activeCat = null; state.view = 'grid';
             document.getElementById('listView').style.display = 'none';
             document.getElementById('gridView').style.display = 'grid';
+            document.querySelector('.sort-bar').style.display = 'none';
             document.getElementById('searchInput').value = "";
-            renderGrid();
+            state.sortMode = 0; updateSortButton(); renderGrid();
         }
 
-        function toggleLang() {
-            state.lang = (state.lang === 'TR') ? 'EN' : 'TR';
-            updateUI();
-            refreshCurrentView();
+        // --- DOCK FUNCTIONS ---
+        function openMap() { window.open(MAP_LINK, '_blank'); }
+        function openInsta() { window.open(INSTAGRAM_LINK, '_blank'); }
+        function callTaxi() { window.location.href = "tel:" + TAXI_NUMARASI; } // TAKSİ ARAMA
+        
+        function shareMenu() {
+            if (navigator.share) {
+                navigator.share({ title: 'Ertaş Pide & Kebap', url: window.location.href }).catch(console.error);
+            } else { alert("Link: " + window.location.href); }
         }
 
-        function toggleCurrency() {
-            state.currency = (state.currency === 'TL') ? 'EUR' : 'TL';
-            updateUI();
-            refreshCurrentView();
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
+        function copyWifi() {
+            navigator.clipboard.writeText(WIFI_SIFRE).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = "Kopyalandı!"; btn.style.background = "#4CAF50";
+                setTimeout(() => { btn.innerText = "Kopyala"; btn.style.background = "var(--primary)"; }, 2000);
+            });
         }
+
+        function toggleSort() {
+            state.sortMode = (state.sortMode + 1) % 3;
+            updateSortButton();
+            if (state.view === 'list' && state.activeCat) renderList(state.grouped[state.activeCat]);
+            else if (state.view === 'search') document.getElementById('searchInput').dispatchEvent(new Event('keyup'));
+        }
+
+        function updateSortButton() {
+            document.getElementById('sortText').innerText = ui[state.lang].sort[state.sortMode];
+            const icon = document.querySelector('.sort-btn i');
+            icon.className = state.sortMode === 0 ? "fas fa-sort" : (state.sortMode === 1 ? "fas fa-sort-amount-down-alt" : "fas fa-sort-amount-down");
+        }
+
+        function toggleLang() { state.lang = state.lang === 'TR' ? 'EN' : 'TR'; updateUI(); if(state.view==='list') openCat(state.activeCat); else renderGrid(); }
+        function toggleCurrency() { state.currency = state.currency === 'TL' ? 'EUR' : 'TL'; updateUI(); if(state.view==='list') openCat(state.activeCat); else renderGrid(); }
 
         function updateUI() {
-            const lBtn = document.getElementById('langBtn');
-            const cBtn = document.getElementById('currencyBtn');
-            lBtn.innerText = state.lang;
-            cBtn.innerText = (state.currency === 'TL') ? '₺' : '€';
-            lBtn.classList.toggle('active', state.lang === 'EN');
-            cBtn.classList.toggle('active', state.currency === 'EUR');
-            document.getElementById('searchInput').placeholder = textRes[state.lang].search;
-            document.getElementById('backText').innerText = textRes[state.lang].back;
-        }
-
-        function refreshCurrentView() {
-            if(state.view === 'grid') renderGrid();
-            else if(state.view === 'list') {
-                let items = state.grouped[state.activeCat];
-                let name = (state.lang === 'EN' && items[0].Kategori_EN) ? items[0].Kategori_EN : state.activeCat;
-                document.getElementById('pageTitle').innerText = name;
-                renderList(items);
-            } else if(state.view === 'search') {
-                document.getElementById('searchInput').dispatchEvent(new Event('keyup'));
-            }
+            document.getElementById('langBtn').innerText = state.lang;
+            document.getElementById('currencyBtn').innerText = state.currency === 'TL' ? '₺' : '€';
+            document.getElementById('langBtn').classList.toggle('active', state.lang === 'EN');
+            document.getElementById('currencyBtn').classList.toggle('active', state.currency === 'EUR');
+            document.getElementById('searchInput').placeholder = ui[state.lang].search;
+            document.getElementById('backText').innerText = ui[state.lang].back;
+            updateSortButton();
         }
 
         document.getElementById('searchInput').addEventListener('keyup', (e) => {
             const term = e.target.value.toLowerCase();
-            if(term.length === 0) {
-                if(state.activeCat) openCategory(state.activeCat);
-                else goBack();
-                return;
-            }
+            if(!term) { state.activeCat ? openCat(state.activeCat) : goBack(); return; }
             state.view = 'search';
             document.getElementById('gridView').style.display = 'none';
             document.getElementById('listView').style.display = 'block';
-            document.getElementById('pageTitle').innerText = (state.lang === 'TR') ? "Sonuçlar" : "Results";
+            document.querySelector('.sort-bar').style.display = 'flex';
+            document.getElementById('pageTitle').innerText = state.lang === 'TR' ? "SONUÇLAR" : "RESULTS";
             
-            let results = [];
-            state.data.forEach(item => {
-                let fullText = `${item.UrunAdi} ${item.Aciklama} ${item.UrunAdi_EN || ''} ${item.Aciklama_EN || ''}`.toLowerCase();
-                if(fullText.includes(term)) results.push(item);
+            const res = state.data.filter(i => {
+                const all = `${i.UrunAdi} ${i.Aciklama} ${i.UrunAdi_EN || ''} ${i.Aciklama_EN || ''}`.toLowerCase();
+                return all.includes(term);
             });
-            renderList(results);
+            renderList(res);
         });
-
-        function csvToObjects(csv) {
-            const lines = csv.split("\n");
-            const headers = lines[0].split(",").map(h => h.trim().replace(/[\r"]/g, ""));
-            const result = [];
-            for(let i=1; i<lines.length; i++){
-                if(!lines[i]) continue;
-                const currentline = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                const obj = {};
-                headers.forEach((h, j) => {
-                    obj[h] = currentline[j] ? currentline[j].replace(/[\r"]/g, "") : "";
-                });
-                result.push(obj);
-            }
-            return result;
-        }
     </script>
 </body>
 </html>
