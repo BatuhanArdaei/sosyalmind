@@ -23,7 +23,11 @@
             --radius: 20px;
         }
 
-        /* TEMEL AYARLAR */
+        /* Kutu Modeli Sıfırlama (Taşmaları engeller) */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0; background-color: var(--bg-deep); color: var(--text-white);
             font-family: 'Inter', sans-serif; 
@@ -38,22 +42,26 @@
             background-size: cover; background-position: center; opacity: 0.15; filter: blur(8px); z-index: -10;
         }
 
-        /* --- YENİ YÜKLEME EKRANI (VIDEO) --- */
+        /* --- YENİ YÜKLEME EKRANI (Video Fix) --- */
         .global-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000000; z-index: 99999; /* Tam siyah arka plan */
+            background: #000000; z-index: 99999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 0.5s ease, visibility 0.5s;
         }
         .global-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         
-        /* VIDEO STİLİ */
+        /* VIDEO STİLİ - Kontrolleri Gizle */
         .loader-video {
-            width: 180px; /* Videonun ekrandaki boyutu */
+            width: 180px; 
             height: auto;
-            mix-blend-mode: screen; /* Siyah arkaplanı silip sadece logoyu gösterir */
+            mix-blend-mode: screen; 
             margin-bottom: 10px;
+            pointer-events: none; /* Tıklamayı engeller */
         }
+        /* Tarayıcı video kontrollerini zorla gizle */
+        .loader-video::-webkit-media-controls { display: none !important; }
+        .loader-video::-webkit-media-controls-enclosure { display: none !important; }
         
         .loading-text {
             font-family: 'Outfit', sans-serif; font-weight: 800; 
@@ -93,30 +101,35 @@
             cursor: pointer; padding: 8px; transition: 0.3s;
         }
 
-        /* --- ARAMA POPUP --- */
+        /* --- ARAMA POPUP (Taşma Düzeltildi) --- */
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95); z-index: 2000;
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.98); z-index: 2000;
             display: flex; flex-direction: column; padding: 20px;
             opacity: 0; visibility: hidden; transition: 0.3s;
             transform: translateY(-20px);
+            box-sizing: border-box; /* Kenarlardan taşmayı engeller */
         }
         .search-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         
-        .search-header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
-        .close-search { color: #fff; font-size: 1.5rem; background: none; border: none; cursor: pointer; }
+        .search-header { 
+            display: flex; justify-content: flex-end; margin-bottom: 20px; width: 100%;
+        }
+        .close-search { 
+            color: #fff; font-size: 1.8rem; background: none; border: none; cursor: pointer; padding: 10px;
+        }
         
         .search-input {
             width: 100%; background: #1a1a1a; border: 1px solid #333;
             padding: 18px 20px; border-radius: 16px; color: #fff; font-size: 1.1rem; 
             font-family: 'Inter', sans-serif; outline: none; margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 59, 59, 0.2); }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 59, 59, 0.2); }
         
-        .search-results-area { flex: 1; overflow-y: auto; }
+        .search-results-area { flex: 1; overflow-y: auto; width: 100%; }
 
-        /* --- KART YAPISI --- */
+        /* --- CONTENT --- */
         .content-area { max-width: 1000px; margin: 0 auto; padding: 20px; }
         
         .grid-layout { 
@@ -124,6 +137,7 @@
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
         }
 
+        /* --- KART YAPISI (Fiyat Düzeltildi) --- */
         .card-base {
             position: relative; border-radius: var(--radius); overflow: hidden;
             cursor: pointer; border: 1px solid var(--border-glass);
@@ -140,23 +154,33 @@
         }
         .card-base:hover .card-img { transform: scale(1.05); filter: brightness(1); }
 
+        /* Overlay: Alt kısmı daha koyu yaparak fiyatı belirginleştirdik */
         .card-overlay {
             position: relative; z-index: 1;
-            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
-            padding: 15px; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%);
+            padding: 20px 15px 15px 15px; /* Alt boşluğu biraz azalttık */
+            width: 100%;
         }
 
         .card-title {
             font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: #fff;
-            margin-bottom: 4px; line-height: 1.1; letter-spacing: -0.5px;
+            margin-bottom: 4px; line-height: 1.2; letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
         }
         .card-subtitle {
             font-size: 0.75rem; color: #ccc; font-weight: 400;
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+            margin-bottom: 8px;
         }
+        
+        /* Fiyatı daha belirgin ve ortada yaptım */
         .card-price {
-            font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--primary);
-            margin-top: 6px; text-align: right;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem; font-weight: 800; color: var(--primary);
+            text-align: right; 
+            text-shadow: 0 0 15px rgba(0,0,0,1); /* Siyah gölge ile okunurluğu artırdık */
+            padding-top: 5px;
+            border-top: 1px solid rgba(255,255,255,0.1); /* İnce çizgi ile ayırdık */
         }
 
         /* NAV & SORT */
@@ -204,7 +228,7 @@
         .dock-item:hover i { color: var(--primary); transform: translateY(-3px); }
         .dock-item.taxi i { color: #FFD700; }
 
-        /* MODAL */
+        /* WIFI MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 10000;
@@ -226,9 +250,8 @@
 </head>
 <body>
 
-    <!-- YÜKLEME EKRANI (VIDEO) -->
+    <!-- YÜKLEME EKRANI (VIDEO - Tıklama kapalı) -->
     <div id="globalLoader" class="global-loader">
-        <!-- SENİN VİDEO LİNKİN -->
         <video autoplay loop muted playsinline class="loader-video">
             <source src="https://res.cloudinary.com/douh5tbmk/video/upload/v1763962046/sm_logo_animasyon_hoec4y.mp4" type="video/mp4">
         </video>
@@ -288,9 +311,9 @@
     <!-- BOTTOM DOCK -->
     <div class="bottom-dock">
         <button class="dock-item" onclick="openModal('wifiModal')"><i class="fas fa-wifi"></i> <span>Wi-Fi</span></button>
-        <button class="dock-item" onclick="openMap()"><i class="fas fa-location-dot"></i> <span>Location</span></button>
-        <button class="dock-item taxi" onclick="callTaxi()"><i class="fas fa-taxi"></i> <span>Taxi</span></button>
-        <button class="dock-item" onclick="shareMenu()"><i class="fas fa-share-nodes"></i> <span>Share</span></button>
+        <button class="dock-item" onclick="openMap()"><i class="fas fa-location-dot"></i> <span>Konum</span></button>
+        <button class="dock-item taxi" onclick="callTaxi()"><i class="fas fa-taxi"></i> <span>Taksi</span></button>
+        <button class="dock-item" onclick="shareMenu()"><i class="fas fa-share-nodes"></i> <span>Paylaş</span></button>
         <button class="dock-item" onclick="openInsta()"><i class="fab fa-instagram"></i> <span>Insta</span></button>
     </div>
 
@@ -325,12 +348,9 @@
             EN: { searchPh: "Search...", back: "GO BACK", unit: "ITEMS", langLabel: "🇹🇷 TR", sort: ["Sort", "Lowest", "Highest"] } 
         };
 
-        // --- LOADER (Video'yu yönetir) ---
+        // --- LOADER ---
         function showLoading() { document.getElementById('globalLoader').classList.remove('hidden'); }
-        function hideLoading() { 
-            const l=document.getElementById('globalLoader'); 
-            setTimeout(()=>{l.classList.add('hidden')},600); // 600ms sonra gizle
-        }
+        function hideLoading() { const l=document.getElementById('globalLoader'); setTimeout(()=>{l.classList.add('hidden')},600); }
 
         // --- INIT ---
         document.getElementById('wifiPassText').innerText = WIFI_SIFRE;
@@ -341,7 +361,7 @@
                 state.data = mergeData(csvToObjects(csvTL), csvToObjects(csvEUR));
                 groupData();
                 renderGrid();
-                hideLoading(); // Veri yüklenince loading ekranını kaldır
+                hideLoading();
                 updateUI();
             });
         });
