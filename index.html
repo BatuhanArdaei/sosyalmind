@@ -66,11 +66,17 @@
             padding: 15px 20px; border-bottom: 1px solid var(--border-glass);
             display: flex; justify-content: space-between; align-items: center;
         }
+        
+        /* LOGO TIKLANABİLİR YAPILDI */
         .brand-logo { 
             font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; 
             color: #fff; text-transform: uppercase; letter-spacing: -0.5px; flex: 1;
+            cursor: pointer; /* Tıklanabilir imleç */
+            transition: transform 0.2s, opacity 0.2s;
         }
+        .brand-logo:active { transform: scale(0.95); opacity: 0.8; } /* Tıklama efekti */
         .brand-logo span { color: var(--primary); }
+        
         .header-actions { display: flex; align-items: center; gap: 10px; }
 
         .ctrl-btn {
@@ -202,7 +208,7 @@
             border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Outfit', sans-serif; font-size: 1rem;
         }
 
-        /* --- INSTAGRAM BUTONLARI (YENİ) --- */
+        /* --- INSTAGRAM BUTONLARI --- */
         .social-btn {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; padding: 15px; margin-bottom: 12px;
@@ -217,16 +223,16 @@
 </head>
 <body>
 
-    <!-- YÜKLEME EKRANI -->
+    <!-- LOADER -->
     <div id="preloader">
         <video autoplay muted loop playsinline>
             <source src="https://res.cloudinary.com/douh5tbmk/video/upload/v1763962054/sm_logo_animasyon_bdso9x.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- HEADER -->
+    <!-- HEADER (LOGO TIKLANABİLİR) -->
     <header class="cinematic-header">
-        <div class="brand-logo">Ertaş <span>Pide</span></div>
+        <div class="brand-logo" onclick="goHome()">Ertaş <span>Pide</span></div>
         <div class="header-actions">
             <button class="ctrl-btn" id="langBtn" onclick="toggleLang()">🇬🇧 EN</button>
             <button class="ctrl-btn active" id="currencyBtn" onclick="toggleCurrency()">₺</button>
@@ -282,7 +288,6 @@
         <button class="dock-item" onclick="shareMenu()">
             <i class="fas fa-share-nodes"></i> <span data-i18n="share">Paylaş</span>
         </button>
-        <!-- INSTAGRAM BUTONU (Pop-up açar) -->
         <button class="dock-item" onclick="openModal('instaModal')">
             <i class="fab fa-instagram"></i> <span data-i18n="insta">Insta</span>
         </button>
@@ -299,19 +304,15 @@
         </div>
     </div>
 
-    <!-- INSTAGRAM MODAL (YENİ) -->
+    <!-- INSTAGRAM MODAL -->
     <div id="instaModal" class="modal-overlay">
         <div class="modal-card">
             <div class="close-modal" onclick="closeModal('instaModal')"><i class="fas fa-times"></i></div>
             <div class="modal-icon"><i class="fab fa-instagram"></i></div>
             <div class="modal-title" data-i18n="instaTitle">Instagram</div>
-            
-            <!-- Buton 1 -->
             <button onclick="openLink(INSTA_1_LINK)" class="social-btn">
                 <i class="fab fa-instagram"></i> <span data-i18n="instaBtn1">Restoran Hesabı</span>
             </button>
-            
-            <!-- Buton 2 -->
             <button onclick="openLink(INSTA_2_LINK)" class="social-btn">
                 <i class="fab fa-instagram"></i> <span data-i18n="instaBtn2">Şefin Hesabı</span>
             </button>
@@ -329,14 +330,12 @@
         const TAXI_NUMARASI = "+905320000000"; 
         const WIFI_SIFRE = "Ertas2024"; 
         const MAP_LINK = "https://maps.google.com/?q=Ertaş+Pide+Kebap+Salonu";
-        
-        // --- INSTAGRAM AYARLARI (YENİ) ---
         const INSTA_1_LINK = "https://instagram.com/ertas_pide_kebap_corba";
         const INSTA_2_LINK = "https://instagram.com/sosyalmind";
 
         let state = { lang: 'TR', currency: 'TL', data: [], grouped: {}, activeCat: null, view: 'grid', sortMode: 0 };
         
-        // --- DİL SÖZLÜĞÜ (Tam Entegre) ---
+        // --- DİL SÖZLÜĞÜ ---
         const ui = { 
             TR: { 
                 searchPh: "Menüde arama yapın...", 
@@ -354,10 +353,9 @@
                 wifiTitle: "Wi-Fi Şifresi",
                 copy: "Kopyala",
                 copied: "Kopyalandı!",
-                // Instagram Buton İsimleri
                 instaTitle: "Instagram",
                 instaBtn1: "Restoran Hesabı",
-                instaBtn2: "SosyalMind resmi Hesabı"
+                instaBtn2: "SosyalMind Resmi Hesabı"
             }, 
             EN: { 
                 searchPh: "Search the menu...", 
@@ -375,10 +373,9 @@
                 wifiTitle: "Wi-Fi Password",
                 copy: "Copy",
                 copied: "Copied!",
-                // Instagram Button Names
                 instaTitle: "Instagram",
                 instaBtn1: "Restaurant Page",
-                instaBtn2: "SosyalMind Page"
+                instaBtn2: "SosyalMind Official Page"
             } 
         };
 
@@ -528,6 +525,24 @@
             }, 500);
         }
 
+        // --- GO HOME FONKSİYONU ---
+        function goHome() {
+            if(state.view === 'grid' && !document.getElementById('searchOverlay').classList.contains('active')) return;
+            showLoading();
+            setTimeout(() => {
+                state.activeCat = null; state.view = 'grid'; state.sortMode = 0;
+                document.getElementById('listView').style.display = 'none';
+                document.getElementById('gridView').style.display = 'grid';
+                document.getElementById('searchOverlay').classList.remove('active');
+                document.getElementById('searchInput').value = "";
+                document.getElementById('searchResults').innerHTML = "";
+                updateSortButton();
+                renderGrid();
+                window.scrollTo(0,0);
+                hideLoading();
+            }, 500);
+        }
+
         // --- DOCK FUNCTIONS ---
         function openMap() { window.open(MAP_LINK, '_blank'); }
         function callTaxi() { window.location.href = "tel:" + TAXI_NUMARASI; }
@@ -562,8 +577,6 @@
 
         function updateUI() {
             const texts = ui[state.lang];
-
-            // 1. data-i18n etiketli tüm elementleri bul ve çevir
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if(texts[key]) {
@@ -571,14 +584,11 @@
                     else el.innerText = texts[key];
                 }
             });
-
-            // 2. Butonlar ve Placeholderlar
             document.getElementById('langBtn').innerText = texts.langLabel;
             document.getElementById('currencyBtn').innerText = state.currency === 'TL' ? '₺' : '€';
             document.getElementById('langBtn').classList.toggle('active', state.lang === 'EN');
             document.getElementById('currencyBtn').classList.toggle('active', state.currency === 'EUR');
             document.getElementById('searchInput').placeholder = texts.searchPh;
-            
             document.querySelector('.copy-btn').innerText = texts.copy;
             updateSortButton();
         }
